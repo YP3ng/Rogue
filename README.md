@@ -1,2 +1,1 @@
-# Rogue
-Setting up for doing A2
+Ready version for A2
