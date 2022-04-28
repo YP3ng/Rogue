@@ -1,3 +1,3 @@
-public class ItemClass {
+public class ItemClass extends Entity {
     
 }
