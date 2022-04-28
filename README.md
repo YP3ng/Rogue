@@ -1,2 +1,1 @@
-# Rogue
-First version of A2
+Ready version for A2
