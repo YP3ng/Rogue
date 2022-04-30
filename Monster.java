@@ -3,7 +3,7 @@
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296
  *
  */
-public class Monster {
+public class Monster extends Entity {
     // All of the variables are from user inputs
     private String name;
     private int maxHealth;
@@ -11,8 +11,8 @@ public class Monster {
     private int curHealth;
 
     // Constructor
-    public Monster () {
-        this.name = null;
+    public Monster (String name) {
+        super(name);
     }
 
     // Name setter
@@ -36,9 +36,9 @@ public class Monster {
     public int getDamage () {return this.damage;}
 
     // Print monster info
-    public void info (String name, int health, int damage) {
+    public void displayInfo(String name) {
         System.out.println ("Monster name: " +  name );
-        System.out.println ("Monster health: " + health);
+        System.out.println ("Monster health: " + curHealth);
         System.out.println ("Monster damage: " + damage);
         System.out.printf ("Monster '%s' created.\n\n", name);
     }

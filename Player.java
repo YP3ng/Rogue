@@ -3,14 +3,14 @@
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296
  *
  */
-public class Player {
+public class Player extends Entity {
     private String name;
     private int level;
     private int curHealth;
 
     //constructor
-    public Player () {
-        this.name = null;
+    public Player (String name) {
+        super(name);
         this.level = 1;
         this.curHealth = this.maxHealth (level);
     }
@@ -36,11 +36,12 @@ public class Player {
     // Attack damage getter
     public int getDamage () {return this.attackDamage (this.level);}
 
+
     // Summarize of player
-    public void info (String name, int level, int curHealth, int maxHealth, int damage) {
+    public void displayInfo (String name) {
         System.out.print (name + " (Lv. " + level + ")\n");
-        System.out.print ("Damage: " + damage +"\n");
-        System.out.print ("Health: " + curHealth + "/" + maxHealth + "\n\n");
+        System.out.print ("Damage: " + this.getDamage() +"\n");
+        System.out.print ("Health: " + this.getCurHealth() + "/" + this.getMaxHealth() + "\n\n");
     }
 
     // MaxHealth method
