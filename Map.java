@@ -6,6 +6,6 @@
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296
  *
  */
-public class Map {
+public class Map implements Traversable {
     
 }
