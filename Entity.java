@@ -5,5 +5,14 @@
  *
  */
 public abstract class Entity {
+
+    protected String name;
     
+    // Constructor of Entity
+    public Entity(String name) {
+        this.name = name;
+    }
+
+    // Display information of entity
+    public abstract void displayInfo(String name);
 }
