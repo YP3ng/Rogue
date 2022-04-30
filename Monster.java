@@ -16,6 +16,7 @@ public class Monster extends Unit {
     }
 
     // Print monster info
+    @Override
     public void displayInfo(String name) {
         System.out.println ("Monster name: " +  name );
         System.out.println ("Monster health: " + curHealth);

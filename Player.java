@@ -16,6 +16,7 @@ public class Player extends Unit {
     }
 
     // display player's information
+    @Override
     public void displayInfo (String name) {
         System.out.print (name + " (Lv. " + level + ")\n");
         System.out.print ("Damage: " + this.getDamage() +"\n");
