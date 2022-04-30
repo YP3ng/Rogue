@@ -1,5 +1,7 @@
 /**
- * This abstract class is a base class for all entities in Rogue game.
+ * The world manages a lot entities within it. 
+ * It would make sense for entities to know how to render themselves, 
+ * and hold positional information about where they are in the world.
  * So far, we only have three derived classes, Player, Monster, ItemClass
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296
  *
@@ -12,7 +14,5 @@ public abstract class Entity {
     public Entity(String name) {
         this.name = name;
     }
-
-    // Display information of entity
-    public abstract void displayInfo(String name);
+    
 }

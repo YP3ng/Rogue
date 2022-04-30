@@ -3,7 +3,7 @@
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296
  *
  */
-public class Monster extends Entity {
+public class Monster extends Unit {
     // All of the variables are from user inputs
     private String name;
     private int maxHealth;
@@ -23,7 +23,7 @@ public class Monster extends Entity {
         System.out.printf ("Monster '%s' created.\n\n", name);
     }
 
-    
+
     // Name setter
     public void setName (String x) {this.name = x;}
     // Name getter

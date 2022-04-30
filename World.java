@@ -1,6 +1,11 @@
 
 /**
- * This program print out the map like Rover.java, with more functionalities.
+ * The overall class for each world. Holds map data and entities of the world. 
+ * It would make sense for this class to manages interactions between entities (such as triggering battles, 
+ * or detecting the pickup of items by the player). 
+ * Manages the overall rendering of the world, perhaps delegating to some rendering to other classes.
+
+
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296
  *
  */

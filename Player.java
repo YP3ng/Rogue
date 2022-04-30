@@ -3,7 +3,7 @@
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296
  *
  */
-public class Player extends Entity {
+public class Player extends Unit {
     private String name;
     private int level;
     private int curHealth;
@@ -21,7 +21,7 @@ public class Player extends Entity {
         System.out.print ("Damage: " + this.getDamage() +"\n");
         System.out.print ("Health: " + this.getCurHealth() + "/" + this.getMaxHealth() + "\n\n");
     }
-    
+
     // Name setter
     public void setName (String x) {this.name = x;}
     // Name getter
