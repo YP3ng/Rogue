@@ -8,4 +8,23 @@
  */
 public class Map implements Traversable {
     
+    // Constructor
+    public Map() {}
+
+    // Normal ground can be traversed, others can't
+    public boolean canTraverse(String type) {
+        if (type == ".") {return true;}
+        return false;
+    }
+
+    // Three different terrain
+    public void normalGround() {
+        System.out.print(".");
+    }
+    public void mountains() {
+        System.out.print("#");
+    }
+    public void water() {
+        System.out.print("~");
+    }
 }
