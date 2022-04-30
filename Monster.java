@@ -15,6 +15,15 @@ public class Monster extends Entity {
         super(name);
     }
 
+    // Print monster info
+    public void displayInfo(String name) {
+        System.out.println ("Monster name: " +  name );
+        System.out.println ("Monster health: " + curHealth);
+        System.out.println ("Monster damage: " + damage);
+        System.out.printf ("Monster '%s' created.\n\n", name);
+    }
+
+    
     // Name setter
     public void setName (String x) {this.name = x;}
     // Name getter
@@ -34,13 +43,5 @@ public class Monster extends Entity {
     public void setDamage (int x) {this.damage = x;}
     // Damage getter
     public int getDamage () {return this.damage;}
-
-    // Print monster info
-    public void displayInfo(String name) {
-        System.out.println ("Monster name: " +  name );
-        System.out.println ("Monster health: " + curHealth);
-        System.out.println ("Monster damage: " + damage);
-        System.out.printf ("Monster '%s' created.\n\n", name);
-    }
 
 }

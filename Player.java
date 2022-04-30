@@ -14,6 +14,13 @@ public class Player extends Entity {
         this.level = 1;
         this.curHealth = this.maxHealth (level);
     }
+
+    // display player's information
+    public void displayInfo (String name) {
+        System.out.print (name + " (Lv. " + level + ")\n");
+        System.out.print ("Damage: " + this.getDamage() +"\n");
+        System.out.print ("Health: " + this.getCurHealth() + "/" + this.getMaxHealth() + "\n\n");
+    }
     
     // Name setter
     public void setName (String x) {this.name = x;}
@@ -35,14 +42,6 @@ public class Player extends Entity {
 
     // Attack damage getter
     public int getDamage () {return this.attackDamage (this.level);}
-
-
-    // Summarize of player
-    public void displayInfo (String name) {
-        System.out.print (name + " (Lv. " + level + ")\n");
-        System.out.print ("Damage: " + this.getDamage() +"\n");
-        System.out.print ("Health: " + this.getCurHealth() + "/" + this.getMaxHealth() + "\n\n");
-    }
 
     // MaxHealth method
     private int maxHealth (int level) {

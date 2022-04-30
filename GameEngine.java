@@ -58,12 +58,8 @@ public class GameEngine {
 					break;
                 case "player":
 					if (player.getName () != null) {
-						player.info (
-							player.getName (), 
-							player.getLevel (), 
-							player.getCurHealth (),
-							player.getMaxHealth (), 
-							player.getDamage ()
+						player.displayInfo (
+							player.getName ()
 						);
 						if (commands.returnToMenu (scan)) {
 							menu (player, monster, commands);
