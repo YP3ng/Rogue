@@ -6,4 +6,5 @@ public abstract class Unit extends Entity {
 
     // Display information of entity
     public abstract void displayInfo(String name);
+
 }

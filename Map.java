@@ -6,10 +6,14 @@
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296
  *
  */
+
+import java.util.Scanner;
 public class Map implements Traversable {
     
     // Constructor
-    public Map() {}
+    public Map(Scanner sc) {
+        
+    }
 
     // Normal ground can be traversed, others can't
     public boolean canTraverse(String type) {
