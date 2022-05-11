@@ -7,12 +7,16 @@ public class Player extends Unit {
     private String name;
     private int level;
     private int curHealth;
+    protected int playerPosX;
+    protected int playerPosY;
 
     //constructor
     public Player (String name) {
         super(name);
         this.level = 1;
         this.curHealth = this.maxHealth (level);
+        // initialise player playerPosX, Y
+        this.setPlayerLocation(1, 1);
     }
 
     // Display player's information
@@ -28,16 +32,16 @@ public class Player extends Unit {
     public void movement (String direction) {
         switch (direction) {
             case "w":
-                setPlayerLocation (positionX, positionY - 1);
+                setPlayerLocation (playerPosX, playerPosY - 1);
                 break;
             case "a":
-                setPlayerLocation (positionX - 1, positionY);
+                setPlayerLocation (playerPosX - 1, playerPosY);
                 break;
             case "s":
-                setPlayerLocation (positionX, positionY + 1);
+                setPlayerLocation (playerPosX, playerPosY + 1);
                 break;
             case "d":
-                setPlayerLocation (positionX + 1, positionY);
+                setPlayerLocation (playerPosX + 1, playerPosY);
                 break;
         }
     }
@@ -77,7 +81,7 @@ public class Player extends Unit {
 
     // Set player location after user's input
     private void setPlayerLocation (int x, int y) {
-        this.positionX = x;
-        this.positionY = y;
+        this.playerPosX = x;
+        this.playerPosY = y;
     }
 }

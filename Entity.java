@@ -9,9 +9,7 @@
 public abstract class Entity {
 
     protected String name;
-    protected int positionX;
-    protected int positionY;
-    
+        
     // Constructor of Entity
     public Entity(String name) {
         this.name = name;

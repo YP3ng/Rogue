@@ -35,9 +35,12 @@ import java.util.Scanner;
         // Reset player location
         this.setPlayer (1, 1);
         // Start the advanture
-        boolean isReachMonster = false;
+        boolean isEnd = false;
 
-        while (!isReachMonster) {
+        // Start the game world loop
+        while (!isEnd) {
+
+            // Print out the map
             world.printMap (
                 MAP_WIDTH, MAP_HEIGHT, 
                 world.playerX, world.playerY,
@@ -52,34 +55,28 @@ import java.util.Scanner;
             if (world.validateDirection (direction)) {continue;}
             if (world.validateMove (direction)) {continue;}
 
-            // Update location information
-            switch (direction) {
-                case "w":
-                    world.setPlayer (world.playerX, world.playerY - 1);
-                    break;
-                case "a":
-                    world.setPlayer (world.playerX - 1, world.playerY);
-                    break;
-                case "s":
-                    world.setPlayer (world.playerX, world.playerY + 1);
-                    break;
-                case "d":
-                    world.setPlayer (world.playerX + 1, world.playerY);
-                    break;            
-                case "home":
-                    isReachMonster = home (isReachMonster);
-                    break;
-            
+            // If home is typed, return to menu
+            if (direction == "home") {
+                home (isEnd);
+                break;
             }
-            // Check if the program needs to stop
-            if(isReachMonster) {break;}
-            else {isReachMonster = encounterCheck (world.playerX, world.playerY);}
+            
+            // Update mosnter location information
+
+            // Update player location information
+            player.movement(direction);
+
+            // Check if player meets monster
+            if (encounterCheck (world.playerX, world.playerY)) {
+                battle.battleLoop(player, monster, commands);
+                // if player lose, return to menu
+                // if monster lose, monster removed
+                // if more than one monster encounter player, battle starts one by one.
+            }
+
+            // Check if player meets items
+            
         }
-        // Battle starts
-        if (encounterCheck (world.playerX, world.playerY)) {
-            battle.battleLoop (player, monster, commands);
-        }
-        
     }
     
     
@@ -152,9 +149,9 @@ import java.util.Scanner;
     }
     
     // Method for users to break loop
-    private boolean home (boolean isReachMonster) {
+    private boolean home (boolean isEnd) {
         System.out.println ("Returning home...\n");
-        return true;
+        return isEnd = true;
     }
 
     // Decide names on the map
