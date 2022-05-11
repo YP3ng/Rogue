@@ -70,7 +70,7 @@ import java.util.Scanner;
                     isReachMonster = home (isReachMonster);
                     break;
             
-            } 
+            }
             // Check if the program needs to stop
             if(isReachMonster) {break;}
             else {isReachMonster = encounterCheck (world.playerX, world.playerY);}
@@ -82,11 +82,6 @@ import java.util.Scanner;
         
     }
     
-    // Set player location after user's input
-    private void setPlayer (int x, int y) {
-        this.playerX = x;
-        this.playerY = y;
-    }
     
     // Print map function
     private void printMap (

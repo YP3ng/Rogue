@@ -13,7 +13,6 @@ public class GameEngine {
 		// This main method is for running the whole program
 		// Creates an instance of the game engine.
 		GameEngine gameEngine = new GameEngine ();
-
 		// Runs the main game loop.
 		gameEngine.runGameLoop ();
 		

@@ -15,12 +15,31 @@ public class Player extends Unit {
         this.curHealth = this.maxHealth (level);
     }
 
-    // display player's information
+    // Display player's information
     @Override
     public void displayInfo (String name) {
         System.out.print (name + " (Lv. " + level + ")\n");
         System.out.print ("Damage: " + this.getDamage() +"\n");
         System.out.print ("Health: " + this.getCurHealth() + "/" + this.getMaxHealth() + "\n\n");
+    }
+
+    // Define the movement of player
+    @Override
+    public void movement (String direction) {
+        switch (direction) {
+            case "w":
+                setPlayerLocation (positionX, positionY - 1);
+                break;
+            case "a":
+                setPlayerLocation (positionX - 1, positionY);
+                break;
+            case "s":
+                setPlayerLocation (positionX, positionY + 1);
+                break;
+            case "d":
+                setPlayerLocation (positionX + 1, positionY);
+                break;
+        }
     }
 
     // Name setter
@@ -54,5 +73,11 @@ public class Player extends Unit {
     private int attackDamage (int level) {
         int damage = 1 + level;
         return damage;
+    }
+
+    // Set player location after user's input
+    private void setPlayerLocation (int x, int y) {
+        this.positionX = x;
+        this.positionY = y;
     }
 }
