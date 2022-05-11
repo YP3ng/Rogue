@@ -29,12 +29,29 @@ public class Monster extends Unit {
     // Define the movement of monster
     /**
      * When the player is within 2 cells of the monster (i.e., anywhere in a 5x5 area around the monster's location), the monster will try to move toward the player to attack.
+     * Version 1
      * 
+     * This version dosn't consider traversable issue and the option of not moving
      */
     @Override
     public void movement(String direction) {
         if (moveOrNot(playerPosX, playerPosY) == true) {
-            
+            switch (moveLogic()) {
+                case "w":
+                setMonsterLocation(monsterPosX, monsterPosY -1);
+                break;
+                case "a":
+                setMonsterLocation(monsterPosX - 1, monsterPosY);
+                break;
+                case "s":
+                setMonsterLocation(monsterPosX, monsterPosY + 1);
+                break;
+                case "d":
+                setMonsterLocation(monsterPosX + 1, monsterPosY);
+                break;
+                case "check code":
+                System.out.println("Movement logic goes wrong");
+            }
         }
     }
 
@@ -77,5 +94,21 @@ public class Monster extends Unit {
     private double distWithPlayer (int playerPosX, int playerPosY) {
         double dist = Math.sqrt((monsterPosX - playerPosX) ^ 2 + (monsterPosY - playerPosY) ^ 2);
         return dist;
+    }
+
+    // determine which way to move
+    // Traversable not considered
+    private String moveLogic () {
+        if (monsterPosX > playerPosX) {
+            return "a";
+        } else if (monsterPosX < playerPosX) {
+            return "d";
+        } else if (monsterPosX == playerPosX & monsterPosY > playerPosY) {
+            return "w";
+        } else if (monsterPosX == playerPosX & monsterPosY < playerPosY) {
+            return "s";
+        } else {
+            return "check code";
+        }
     }
 }
