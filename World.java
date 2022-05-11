@@ -32,8 +32,6 @@ import java.util.Scanner;
         Scanner movement, Battle battle, Commands commands
         ) {
         
-        // Reset player location
-        this.setPlayer (1, 1);
         // Start the advanture
         boolean isEnd = false;
 
