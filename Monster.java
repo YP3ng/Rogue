@@ -49,7 +49,7 @@ public class Monster extends Unit {
                 case "d":
                 setMonsterLocation(monsterPosX + 1, monsterPosY);
                 break;
-                case "check code":
+                case "check code": // for development only, remove before upload
                 System.out.println("Movement logic goes wrong");
             }
         }
