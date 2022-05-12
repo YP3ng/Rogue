@@ -87,6 +87,11 @@ public class Monster extends Unit {
         if (distWithPlayer(playerPosX, playerPosY) <= 4) {
             return true;
         }
+        // Obstacle block
+
+        // move will increase distance
+
+        
         return false;
     }
 

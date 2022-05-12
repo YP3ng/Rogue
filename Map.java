@@ -15,6 +15,7 @@ public class Map implements Traversable {
         
     }
 
+    @Override
     // Normal ground can be traversed, others can't
     public boolean canTraverse(String type) {
         if (type == ".") {return true;}

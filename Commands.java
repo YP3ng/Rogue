@@ -7,9 +7,13 @@
  */
 import java.util.Scanner;
 import java.util.Set;
+import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 
 public class Commands {
-    public static final Set<String> ALLOWED_COMMANDS = Set.of ("help", "player", "monster", "start", "exit", "commands");
+    public static final Set<String> ALLOWED_COMMANDS = Set.of ("help", "player", "monster", "start", "exit", "commands", "save", "load");
     // Show users what commands are allowed
     public void commands () {
         System.out.println ("help");
@@ -17,6 +21,8 @@ public class Commands {
         System.out.println ("monster");
         System.out.println ("start");
         System.out.println ("exit");
+        System.out.println ("save");
+        System.out.println ("load");
         System.out.println ();
     }
 
@@ -81,6 +87,7 @@ public class Commands {
     }
 
     // Start the game
+    // Should allow file input
     public void start (
         World world, Player player, Monster monster, 
         Scanner scan, Battle battle, Commands commands
@@ -104,6 +111,10 @@ public class Commands {
         }
         world.gameWorld (world, player, monster, scan, battle, commands);
     }
+
+    public void save () {};
+
+    public void load () {};
 
     // Close the program
     public void exitProgram () {

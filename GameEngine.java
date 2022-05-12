@@ -88,6 +88,10 @@ public class GameEngine {
 				case "exit":
 					commands.exitProgram ();
 					break;
+				case "save":
+					break;
+				case "load":
+					break;
             }
 		}
 	}
