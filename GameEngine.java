@@ -79,7 +79,8 @@ public class GameEngine {
 					}
                     break;
                 case "start":
-					commands.start (world, player, monster, scan, battle, commands);
+					String fileName = inputFileName (input);
+					commands.start (world, player, monster, scan, battle, commands, fileName);
 					if (commands.returnToMenu (scan)) {
 						menu (player, monster, commands);
 						continue;
@@ -121,6 +122,13 @@ public class GameEngine {
 		String [] commandArgs = input.split (" ");
 		String words = commandArgs[0];
 		return words;
+	}
+
+	// Input cutting for loading game file
+	private String inputFileName (String input) {
+		String [] commandArgs = input.split (" ");
+		String fileName = commandArgs[1];
+		return fileName;
 	}
 	
 	// Displays the title text.

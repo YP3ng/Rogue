@@ -7,8 +7,8 @@ public class Player extends Unit {
     private String name;
     private int level;
     private int curHealth;
-    protected int playerPosX;
-    protected int playerPosY;
+    // protected int playerPosX;
+    // protected int playerPosY;
 
     //constructor
     public Player (String name) {

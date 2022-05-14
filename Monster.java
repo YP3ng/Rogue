@@ -9,8 +9,8 @@ public class Monster extends Unit {
     private int maxHealth;
     private int damage;
     private int curHealth;
-    protected int monsterPosX;
-    protected int monsterPosY;
+    // protected int monsterPosX;
+    // protected int monsterPosY;
 
     // Constructor
     public Monster (String name) {

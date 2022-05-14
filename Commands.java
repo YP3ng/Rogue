@@ -90,7 +90,8 @@ public class Commands {
     // Should allow file input
     public void start (
         World world, Player player, Monster monster, 
-        Scanner scan, Battle battle, Commands commands
+        Scanner scan, Battle battle, Commands commands,
+        String fileName
         ) {
         // Check if player and monster are set up
         if (player.getName () == null) {
@@ -101,7 +102,9 @@ public class Commands {
             System.out.println("No monster found, please create a monster with 'monster' first.\n");
             return;
         }
+
         // Heal both the player and monster to full health if a new game is triggered
+        // Not sure if this still hold in A2
         if (
             player.getCurHealth () != player.getMaxHealth () || 
             monster.getCurHealth () != monster.getMaxHealth ()
@@ -109,7 +112,7 @@ public class Commands {
             player.setCurHealth (player.getMaxHealth ());
             monster.setCurHealth (monster.getMaxHealth ());
         }
-        world.gameWorld (world, player, monster, scan, battle, commands);
+        world.gameWorld (world, player, monster, scan, battle, commands); // Should initialise the map
     }
 
     public void save () {};
