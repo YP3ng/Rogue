@@ -30,23 +30,7 @@ public class Map implements Traversable {
         return false;
     }
 
-    public void mapping (Scanner scan, String fileName) {
-
-        // Initialise the file reader
-        Scanner mapReader = null;
-        try {
-            mapReader = mapReader(fileName);
-        } catch (GameLevelNotFoundException e) {
-            System.out.println(e.getMessage());
-            System.exit(1);
-        }
-
-        while (mapReader.hasNextLine()) {
-            
-        }
-        
-
-    }
+    public void mapping () {}
 
 
     // Print map function
@@ -81,16 +65,6 @@ public class Map implements Traversable {
     }
     public void water() {
         System.out.print("~");
-    }
-
-    // Read map file
-    private Scanner mapReader (String fileName) throws GameLevelNotFoundException {
-        try {
-            Scanner mapReader = new Scanner (new FileInputStream(fileName));
-            return mapReader;
-        } catch (FileNotFoundException e) {
-            throw new GameLevelNotFoundException ("Map not found");
-        }
     }
     
 }

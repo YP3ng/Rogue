@@ -7,6 +7,10 @@
  */
 import java.util.Scanner;
 import java.util.Set;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.FileInputStream;
+
 
 public class Commands {
     public static final Set<String> ALLOWED_COMMANDS = Set.of ("help", "player", "monster", "start", "exit", "commands", "save", "load");
@@ -89,13 +93,9 @@ public class Commands {
         Scanner scan, Battle battle, Commands commands,
         String fileName
         ) {
-        // Check if player and monster are set up
+        // Check if player is set up
         if (player.getName () == null) {
             System.out.println("No player found, please create a player with 'player' first.\n");
-            return;
-        }
-        if (monster.getName () == null) {
-            System.out.println("No monster found, please create a monster with 'monster' first.\n");
             return;
         }
 
@@ -108,7 +108,21 @@ public class Commands {
             player.setCurHealth (player.getMaxHealth ());
             monster.setCurHealth (monster.getMaxHealth ());
         }
-        world.gameWorld (world, player, monster, scan, battle, commands); // Should initialise the map
+        // Initialise the file reader
+        if (fileName != null) {
+            Scanner gameFileRead = null;
+            try {
+            gameFileRead =gameFileRead(fileName);
+            } catch (GameLevelNotFoundException e) {
+                System.out.println(e.getMessage());
+                System.exit(1); // Should return to menu, not exit the program
+            }
+
+            while (gameFileRead.hasNextLine()) {
+
+            }
+        }
+        world.gameWorld (world, player, monster, scan, battle, commands); // Game world with no input file
     }
 
     public void save () {};
@@ -199,6 +213,15 @@ public class Commands {
 		return number;
 	}
 
+    // Read game file
+    private Scanner gameFileRead (String fileName) throws GameLevelNotFoundException {
+        try {
+            Scanner gameFileRead = new Scanner (new FileInputStream(fileName));
+            return gameFileRead;
+        } catch (FileNotFoundException e) {
+            throw new GameLevelNotFoundException ("Map not found");
+        }
+    }
     
 
 }
