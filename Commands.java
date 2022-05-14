@@ -5,6 +5,8 @@
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296
  *
  */
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 import java.io.FileNotFoundException;
@@ -69,15 +71,15 @@ public class Commands {
             input = scan.nextLine ();
             if (validateInputInt(input)) {continue;};
             // Set monster health
-            monster.setMaxHealth (cleanInputInt(input));
-            monster.setCurHealth (cleanInputInt(input));
+            monster.setMaxHealth (parseStrToInt(input));
+            monster.setCurHealth (parseStrToInt(input));
 
             // Configure damage
             System.out.print ("Monster damage: ");
             input = scan.nextLine();
             if (validateInputInt (input)) {continue;}
             // Set monster name
-            monster.setDamage (cleanInputInt (input));
+            monster.setDamage (parseStrToInt (input));
 
             if (monster.getName() != null) {
                 System.out.printf ("Monster '%s' created.\n\n", monster.getName ());
@@ -108,9 +110,12 @@ public class Commands {
             player.setCurHealth (player.getMaxHealth ());
             monster.setCurHealth (monster.getMaxHealth ());
         }
+
+        
         // Initialise the file reader
         if (fileName != null) {
             Scanner gameFileRead = null;
+
             try {
             gameFileRead =gameFileRead(fileName);
             } catch (GameLevelNotFoundException e) {
@@ -118,7 +123,19 @@ public class Commands {
                 System.exit(1); // Should return to menu, not exit the program
             }
 
+            // Extracting the size of the map
+            if (gameFileRead.hasNextLine()) {
+                String mapSize = gameFileRead.nextLine();
+                String [] mapInfo = mapInfo(mapSize);
+                ArrayList<Integer> mapInfoList = parseStrToInt(mapInfo);
+                Map fileMap = new Map(mapInfoList.get(0), mapInfoList.get(1));
+            }
+
+            // Extracting other information
             while (gameFileRead.hasNextLine()) {
+                String line = gameFileRead.nextLine();
+                
+
 
             }
         }
@@ -206,11 +223,18 @@ public class Commands {
 		return word;
 	}
 
-    // Clean input int for further usage
-	private int cleanInputInt (String input) {
-		String[] commandArgs = input.split (" ");
-        int number = Integer.parseInt (commandArgs[0]);
-		return number;
+    // Parse String to Integer
+	private ArrayList<Integer> parseStrToInt (String[] input) {
+        ArrayList<Integer> intList = new ArrayList<Integer> (2);
+        for (String ele : input) {
+            try {
+                int number = Integer.parseInt (ele);
+                intList.add(number);
+            } catch (InputMismatchException err) {
+                return null;
+            }
+        }
+		return intList;
 	}
 
     // Read game file
@@ -223,5 +247,37 @@ public class Commands {
         }
     }
     
+    // Classifier to determine where the information belongs to
+    private void classifier (String line) {
+        try {
+            String[] lineArgs = line.split(" ");
+        } catch (Exception e) {
+            switch () {
+                case "player":
+                    break;
+                case "monster":
+                    break;
+                case "item":
+                    break;
+                case ".":
+                    break;
+                case "~":
+                    break;
+                case "#":
+                    break;
+            }    
+        }
+    }
 
+    // Extracting map information from file input
+    private String[] mapInfo (String line) {
+        try {
+            String[] lineArgs = line.split(" ");
+            return lineArgs;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // 
 }

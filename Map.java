@@ -19,9 +19,12 @@ public class Map implements Traversable {
 	private int mapHeight;
     
     // Constructor
-    public Map() {
-        
+    public Map(int Width, int Height) {
+        this.setHeight(Height);
+        this.setWidth(Width);
     }
+
+    public Map() {}
 
     @Override
     // Normal ground can be traversed, others can't
@@ -67,4 +70,13 @@ public class Map implements Traversable {
         System.out.print("~");
     }
     
+    // Setter for map width
+    public void setWidth (int wid) {
+        this.mapWidth = wid;
+    }
+
+    // Setter for map Height
+    public void setHeight (int hei) {
+        this.mapHeight = hei;
+    }
 }
