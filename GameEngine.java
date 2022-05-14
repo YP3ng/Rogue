@@ -43,8 +43,10 @@ public class GameEngine {
 			String input = scan.nextLine ();
 
 			// if users' input is wrong, go back to menu (or just have another prompt()?)
-			if (validateInputText (input)) {continue;};
-			String commandWord = inputForMenu (input);
+			String commandWord = inputForCommand (input);
+			if (validateInputText (commandWord)) {continue;};
+			
+
 
             switch (commandWord) {
                 case "help":
@@ -79,7 +81,7 @@ public class GameEngine {
 					}
                     break;
                 case "start":
-					String fileName = inputFileName (input);
+					String fileName = checkFile(input);
 					commands.start (world, player, monster, scan, battle, commands, fileName);
 					if (commands.returnToMenu (scan)) {
 						menu (player, monster, commands);
@@ -104,11 +106,7 @@ public class GameEngine {
 
 	// Validates users' inputs
 	private boolean validateInputText (String input) {
-		String [] commandArgs = input.split (" ");
-		if (commandArgs.length != 1) {
-			System.out.println ("Wrong input size, please only type one word");
-			return true;
-		} else if (!Commands.ALLOWED_COMMANDS.contains (commandArgs[0])) {
+		if (!Commands.ALLOWED_COMMANDS.contains (inputForCommand(input))) {
 			System.out.println ("Invalid commands name");
 			prompt ();
 			return true;
@@ -118,7 +116,7 @@ public class GameEngine {
 
 
 	// Input cutting for menu
-	private String inputForMenu (String input) {
+	private String inputForCommand (String input) {
 		String [] commandArgs = input.split (" ");
 		String words = commandArgs[0];
 		return words;
@@ -129,6 +127,15 @@ public class GameEngine {
 		String [] commandArgs = input.split (" ");
 		String fileName = commandArgs[1];
 		return fileName;
+	}
+
+	// Checking input length
+	private String checkFile (String input) {
+		if (input.length() == 2) {
+			return inputFileName(input);
+		} else {
+			return null;
+		}
 	}
 	
 	// Displays the title text.

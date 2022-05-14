@@ -17,6 +17,8 @@ public class Monster extends Unit {
         super(name);
     }
 
+    public Monster () {}
+
     // Print monster info
     @Override
     public void displayInfo(String name) {

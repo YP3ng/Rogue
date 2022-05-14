@@ -19,6 +19,11 @@ public class Player extends Unit {
         this.setPlayerLocation(1, 1);
     }
 
+    public Player () {
+        this.level = 1;
+        this.curHealth = this.maxHealth (level);
+    }
+
     // Display player's information
     @Override
     public void displayInfo (String name) {

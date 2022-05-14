@@ -31,14 +31,20 @@ public class Map implements Traversable {
     }
 
     public void mapping (Scanner scan, String fileName) {
+
         // Initialise the file reader
+        Scanner mapReader = null;
         try {
-            Scanner mapReader = mapReader(fileName);
+            mapReader = mapReader(fileName);
         } catch (GameLevelNotFoundException e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }
 
+        while (mapReader.hasNextLine()) {
+            
+        }
+        
 
     }
 

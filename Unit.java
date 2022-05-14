@@ -13,6 +13,7 @@ public abstract class Unit extends Entity {
     public Unit(String name) {
         super(name);
     }
+    public Unit () {}
 
     // Display information of entity
     public abstract void displayInfo(String name);

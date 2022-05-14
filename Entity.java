@@ -15,4 +15,5 @@ public abstract class Entity {
         this.name = name;
     }
     
+    public Entity () {}
 }
