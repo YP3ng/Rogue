@@ -64,22 +64,25 @@ public class Commands {
             String input = scan.nextLine();
             if (validateInputText (input)) {continue;};
             // Set monster name
-            monster.setName (cleanInputText (input));
+            String[] nameInput = cleanInputText(input);
+            monster.setName (nameInput[0]);
 
             // Configure health
             System.out.print ("Monster health: ");
             input = scan.nextLine ();
             if (validateInputInt(input)) {continue;};
             // Set monster health
-            monster.setMaxHealth (parseStrToInt(input));
-            monster.setCurHealth (parseStrToInt(input));
+            String[] healthVal = cleanInputText(input);
+            monster.setMaxHealth (parseStrToInt(healthVal).get(0));
+            monster.setCurHealth (parseStrToInt(healthVal).get(0));
 
             // Configure damage
             System.out.print ("Monster damage: ");
             input = scan.nextLine();
             if (validateInputInt (input)) {continue;}
-            // Set monster name
-            monster.setDamage (parseStrToInt (input));
+            // Set monster damage
+            String[] damageVal = cleanInputText(input);
+            monster.setDamage (parseStrToInt (damageVal).get(0));
 
             if (monster.getName() != null) {
                 System.out.printf ("Monster '%s' created.\n\n", monster.getName ());
@@ -217,10 +220,9 @@ public class Commands {
 	}
 
 	// Clean input text for further usage
-	private String cleanInputText (String input) {
+	private String[] cleanInputText (String input) {
 		String[] commandArgs = input.split (" ");
-		String word = commandArgs[0];
-		return word;
+		return commandArgs;
 	}
 
     // Parse String to Integer
@@ -279,5 +281,4 @@ public class Commands {
         }
     }
 
-    // 
 }
