@@ -46,7 +46,7 @@ public class Commands {
         if (validateInputText (input)) {player (player, scan);}
         // Set player name
         if (player.getName() == null) {
-            player.setName (cleanInputText (input));
+            player.setName (cleanInputText (input)[0]);
             System.out.printf ("Player '%s' created.\n\n", player.getName());
         }
 
