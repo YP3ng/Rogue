@@ -8,10 +8,18 @@
  */
 
 import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.FileInputStream;
+
+
 public class Map implements Traversable {
+
+    private int mapWidth; 
+	private int mapHeight;
     
     // Constructor
-    public Map(Scanner sc) {
+    public Map() {
         
     }
 
@@ -21,6 +29,42 @@ public class Map implements Traversable {
         if (type == ".") {return true;}
         return false;
     }
+
+    public void mapping (Scanner scan, String fileName) {
+        // Initialise the file reader
+        try {
+            Scanner mapReader = mapReader(fileName);
+        } catch (GameLevelNotFoundException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
+
+
+    }
+
+
+    // Print map function
+    private void printMap (
+        int mapWidth, int mapHeight, 
+        int playerX, int playerY, 
+        int monsterX, int monsterY,
+        char pFirstChar, char mFirstChar
+    ) {
+		for (int i = 0; i < mapHeight; i++) {
+			for (int j = 0; j < mapWidth; j++) {
+				if (playerX == j && playerY == i) { 		  
+					System.out.printf ("%c", pFirstChar);	  
+				} else if (monsterX == j && monsterY == i) {
+					System.out.printf ("%c", mFirstChar);
+				} else {
+					System.out.print (".");
+				}
+			}
+			System.out.println ();
+		}
+		System.out.println ();
+		
+	}
 
     // Three different terrain
     public void normalGround() {
@@ -32,4 +76,15 @@ public class Map implements Traversable {
     public void water() {
         System.out.print("~");
     }
+
+    // Read map file
+    private Scanner mapReader (String fileName) throws GameLevelNotFoundException {
+        try {
+            Scanner mapReader = new Scanner (new FileInputStream(fileName));
+            return mapReader;
+        } catch (FileNotFoundException e) {
+            throw new GameLevelNotFoundException ("Map not found");
+        }
+    }
+    
 }

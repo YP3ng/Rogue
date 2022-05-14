@@ -7,10 +7,6 @@
  */
 import java.util.Scanner;
 import java.util.Set;
-import java.io.FileNotFoundException;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
 
 public class Commands {
     public static final Set<String> ALLOWED_COMMANDS = Set.of ("help", "player", "monster", "start", "exit", "commands", "save", "load");
