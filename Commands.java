@@ -269,6 +269,7 @@ public class Commands {
                 fileMap.makeNewMonster(line);
                 break;
             case 'i':
+                fileMap.makeNewItem(line);
                 break;
             case '.':
                 fileMap.setRows(line);

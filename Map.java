@@ -114,6 +114,23 @@ public class Map implements Traversable {
     }
 
     // Gather Item Information and create new item
-    
+    public void makeNewItem (String line) {
+
+        String[] infoSet = new String[3];
+        String[] sepLine = line.split(" ");
+        int loopIndex = sepLine.length;
+        while (loopIndex > 0) {
+
+            if (loopIndex == 0) {continue;}
+            infoSet[loopIndex - 1] = sepLine[loopIndex];
+            loopIndex -= 1;
+        }
+
+        switch (infoSet[2]) {
+            case "+":
+            case "^":
+            case "@":
+        }
+    }
 
 }
