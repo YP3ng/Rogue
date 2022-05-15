@@ -92,6 +92,9 @@ public class Monster extends Unit {
         this.monsterPosX = x;
         this.monsterPosY = y;
     }
+    // Get monster location
+    public int getMonsterPosX () {return monsterPosX;}
+    public int getMonsterPosY () {return monsterPosY;}
 
     // If the monster starts to move or not
     private boolean moveOrNot (int playerPosX, int playerPosY) {

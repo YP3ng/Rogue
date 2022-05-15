@@ -96,5 +96,7 @@ public class Player extends Unit {
         return damage;
     }
 
-    
+    // Get player location
+    public int getPlayerPosX () {return playerPosX;}
+    public int getPlayerPosY () {return playerPosY;}
 }

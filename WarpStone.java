@@ -4,10 +4,14 @@
  *
  */
 public class WarpStone extends Item {
+
+    private int warpStonePosX;
+    private int warpStonePosY;
     
     // Constructor
-    public WarpStone(String name) {
+    public WarpStone(String name, String[] itemData) {
         super(name);
+        setItemLocation(Integer.parseInt(itemData[0]), Integer.parseInt(itemData[1]));
     }
 
     /**
@@ -22,4 +26,13 @@ public class WarpStone extends Item {
         //return to main menu
 
     }
+
+    // Set Item location
+    public void setItemLocation (int x, int y) {
+        this.warpStonePosX = x;
+        this.warpStonePosY = y;
+    };
+    // Get Item location
+    public int getItemPosX () {return warpStonePosX;};
+    public int getItemPosY () {return warpStonePosY;};
 }

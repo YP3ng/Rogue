@@ -104,15 +104,15 @@ public class Map implements Traversable {
 
         switch (itemData[2]) {
             case "+":
-                HealingItem healItem = new HealingItem("heal");
+                HealingItem healItem = new HealingItem("heal", itemData);
                 itemList.add(healItem);
                 break;
             case "^":
-                DamagePerk damageItem = new DamagePerk("damage");
+                DamagePerk damageItem = new DamagePerk("damage", itemData);
                 itemList.add(damageItem);
                 break;
             case "@":
-                WarpStone stoneItem = new WarpStone("stone");
+                WarpStone stoneItem = new WarpStone("stone", itemData);
                 itemList.add(stoneItem);
                 break;
         }

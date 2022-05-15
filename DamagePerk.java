@@ -4,10 +4,14 @@
  *
  */
 public class DamagePerk extends Item {
+
+    private int damagePerkPosX;
+    private int damagePerkPosY;
     
     // Constructor
-    public DamagePerk(String name) {
+    public DamagePerk(String name, String[] itemData) {
         super(name);
+        setItemLocation(Integer.parseInt(itemData[0]), Integer.parseInt(itemData[1]));
     }
 
     /**
@@ -19,4 +23,13 @@ public class DamagePerk extends Item {
 
         player.setDamage(player.getLevel());
     }
+
+    // Set Item location
+    public void setItemLocation (int x, int y) {
+        this.damagePerkPosX = x;
+        this.damagePerkPosY = y;
+    };
+    // Get Item location
+    public int getItemPosX () {return damagePerkPosX;};
+    public int getItemPosY () {return damagePerkPosY;};
 }
