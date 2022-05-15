@@ -1,6 +1,6 @@
 
 /**
- * The overall class for each world. Holds map data and entities of the world. 
+ * The overall class for each  Holds map data and entities of the  
  * It would make sense for this class to manages interactions between entities (such as triggering battles, 
  * or detecting the pickup of items by the player). 
  * Manages the overall rendering of the world, perhaps delegating to some rendering to other classes.
@@ -28,7 +28,7 @@ import java.util.Scanner;
     }
 
     public void gameWorld (
-        World world, Player player, Monster monster, 
+        Player player, Monster monster, 
         Scanner movement, Battle battle, Commands commands
         ) {
         
@@ -39,19 +39,19 @@ import java.util.Scanner;
         while (!isEnd) {
 
             // Print out the map
-            world.printMap (
+            printMap (
                 MAP_WIDTH, MAP_HEIGHT, 
-                world.playerX, world.playerY,
+                playerX, playerY,
                 MONSTER_X, MONSTER_Y,
                 nameOnMap (player.getName ().toUpperCase ()),
                 nameOnMap (monster.getName ().toLowerCase ())
             );
-            world.prompt();
+            prompt();
 			
             // Validating input directions and player won't be out of boundary after moving
-            String direction = world.inputForMap (movement);
-            if (world.validateDirection (direction)) {continue;}
-            if (world.validateMove (direction)) {continue;}
+            String direction = inputForMap (movement);
+            if (validateDirection (direction)) {continue;}
+            if (validateMove (direction)) {continue;}
 
             // If home is typed, return to menu
             if (direction == "home") {
@@ -65,7 +65,7 @@ import java.util.Scanner;
             player.movement(direction);
 
             // Check if player meets monster
-            if (encounterCheck (world.playerX, world.playerY)) {
+            if (encounterCheck (playerX, playerY)) {
                 battle.battleLoop(player, monster, commands);
                 // if player lose, return to menu
                 // if monster lose, monster removed

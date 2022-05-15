@@ -151,7 +151,7 @@ public class Commands {
             Map defaultMap = new Map();
         }
 
-        world.gameWorld (world, player, monster, scan, battle, commands); // Game world with no input file
+        world.gameWorld (player, monster, scan, battle, commands); // Game world with no input file
     }
 
     public void save () {};
@@ -290,16 +290,5 @@ public class Commands {
         }
     }
 
-    // Unit file input info
-    private String[] playerFileInput (String line) {
-        return null;
-    }
-
-    private String[] monsterFileInput (String line) {
-        return null;
-    }
-
-    private String[] itemFileInput (String line) {
-        return null;
-    }
+    
 }

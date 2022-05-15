@@ -5,6 +5,7 @@
  */
 public abstract class Unit extends Entity {
     
+    // Might not need this position infomation
     protected int playerPosX;
     protected int playerPosY;
     protected int monsterPosX;
