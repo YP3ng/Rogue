@@ -15,7 +15,8 @@ public class DamagePerk extends Item {
      * Reset when player leaves the world (via home command or on death)
      */
     @Override
-    public void effect() {
+    public void effect(Player player) {
 
+        player.setDamage(player.getLevel());
     }
 }

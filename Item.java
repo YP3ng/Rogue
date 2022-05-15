@@ -9,5 +9,5 @@ public abstract class Item extends Entity {
         super(name);
     }
 
-    public abstract void effect();
+    public abstract void effect(Player player);
 }

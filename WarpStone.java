@@ -15,7 +15,11 @@ public class WarpStone extends Item {
      * Return back to the main menu
      */
     @Override
-    public void effect() {
+    public void effect(Player player) {
         
+        player.setLevel(player.getLevel() + 1);
+       
+        //return to main menu
+
     }
 }

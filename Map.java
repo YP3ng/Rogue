@@ -37,6 +37,7 @@ public class Map implements Traversable {
         this.mapRows = new ArrayList<StringBuilder>(mapHeight);
     }
 
+    // for default map 
     public Map() {}
 
     @Override
@@ -82,33 +83,16 @@ public class Map implements Traversable {
     // Gather player location from file input
     public void gatherPlayerLoc (String line, Player player) {
 
-        int[] locSet = new int[2];
-        String[] sepLine = line.split (" ");
-        int loopIndex = sepLine.length;
-        while (loopIndex > 0) {
-
-            if (loopIndex == 0) {continue;}
-            int number = Integer.parseInt (sepLine[loopIndex]);
-            locSet[loopIndex - 1] = number;
-            loopIndex -= 1;
-        }
-        player.setPlayerLocation(locSet[0], locSet[1]);
+        String[] playerData = this.extractFileData(line, 2);
+        player.setPlayerLocation(Integer.parseInt(playerData[0]), Integer.parseInt(playerData[1]));
         playerList.add(player);
     }
 
     // Gather monster Information and create a new monster
     public void makeNewMonster (String line) {
 
-        String[] infoSet = new String[4];
-        String[] sepLine = line.split(" ");
-        int loopIndex = sepLine.length;
-        while (loopIndex > 0) {
-
-            if (loopIndex == 0) {continue;}
-            infoSet[loopIndex - 1] = sepLine[loopIndex];
-            loopIndex -= 1;
-        }
-        Monster monster = new Monster(infoSet);
+        String[] monsterData = this.extractFileData(line, 4);
+        Monster monster = new Monster(monsterData);
         monsterList.add(monster);
         
     }
@@ -116,21 +100,36 @@ public class Map implements Traversable {
     // Gather Item Information and create new item
     public void makeNewItem (String line) {
 
-        String[] infoSet = new String[3];
-        String[] sepLine = line.split(" ");
-        int loopIndex = sepLine.length;
-        while (loopIndex > 0) {
+        String[] itemData = extractFileData(line, 3);
 
-            if (loopIndex == 0) {continue;}
-            infoSet[loopIndex - 1] = sepLine[loopIndex];
-            loopIndex -= 1;
-        }
-
-        switch (infoSet[2]) {
+        switch (itemData[2]) {
             case "+":
+                HealingItem healItem = new HealingItem("heal");
+                itemList.add(healItem);
+                break;
             case "^":
+                DamagePerk damageItem = new DamagePerk("damage");
+                itemList.add(damageItem);
+                break;
             case "@":
+                WarpStone stoneItem = new WarpStone("stone");
+                itemList.add(stoneItem);
+                break;
         }
+    }
+
+    private String[] extractFileData (String line, int size) {
+
+        String[] infoSet = new String[size];
+        String[] sepLine = line.split(" ");
+        int loopIndex = 0;
+        for (String ele : sepLine) {
+
+            if (loopIndex == 0) {continue;} // Don't need first word
+            infoSet[loopIndex] = ele;
+            loopIndex += 1;
+        }
+        return infoSet;
     }
 
 }

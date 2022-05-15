@@ -7,6 +7,7 @@ public class Player extends Unit {
     private String name;
     private int level;
     private int curHealth;
+    private int damage;
     // protected int playerPosX;
     // protected int playerPosY;
 
@@ -15,13 +16,14 @@ public class Player extends Unit {
         super(name);
         this.level = 1;
         this.curHealth = this.maxHealth (level);
-        // initialise player playerPosX, Y
+        // initialise player playerPosX, Y at defaul (1, 1)
         this.setPlayerLocation(1, 1);
     }
 
     public Player () {
         this.level = 1;
         this.curHealth = this.maxHealth (level);
+        this.setPlayerLocation(1, 1);
     }
 
     // Display player's information
@@ -71,6 +73,9 @@ public class Player extends Unit {
 
     // Attack damage getter
     public int getDamage () {return this.attackDamage (this.level);}
+    // Attack damage setter
+    // Only for damagePerk
+    public void setDamage (int level) {this.damage = attackDamage(level) + 1;}
 
     // Set player location after user's input
     public void setPlayerLocation (int x, int y) {

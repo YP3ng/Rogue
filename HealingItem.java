@@ -12,5 +12,8 @@ public class HealingItem extends Item {
 
     // Health player's health to full
     @Override
-    public void effect() {}
+    public void effect(Player player) {
+
+        player.setCurHealth(player.getMaxHealth());
+    }
 }
