@@ -25,6 +25,9 @@ public class Monster extends Unit {
         this.setMonsterLocation(Integer.parseInt(infoSet[0]), Integer.parseInt(infoSet[1]));
     }
 
+    // Default
+    public Monster () {}
+
     // Print monster info
     @Override
     public void displayInfo(String name) {

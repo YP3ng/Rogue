@@ -7,7 +7,7 @@ public class Player extends Unit {
     private String name;
     private int level;
     private int curHealth;
-    private int damage;
+    private int curDamage;
     // protected int playerPosX;
     // protected int playerPosY;
 
@@ -71,11 +71,12 @@ public class Player extends Unit {
     // MaxHealth getter
     public int getMaxHealth () {return this.maxHealth (this.level);}
 
-    // Attack damage getter
+    // Attack damage getter, based on level only
     public int getDamage () {return this.attackDamage (this.level);}
-    // Attack damage setter
-    // Only for damagePerk
-    public void setDamage (int level) {this.damage = attackDamage(level) + 1;}
+    // Attack damage getter, based on level and damage perks
+    public int getPerkDamage () {return this.curDamage;}
+    // Damage setter for damagePerk
+    public void setDamage (int level) {this.curDamage = attackDamage(level) + 1;}
 
     // Set player location after user's input
     public void setPlayerLocation (int x, int y) {
