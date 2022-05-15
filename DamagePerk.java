@@ -1,3 +1,8 @@
+/**
+ *  "^" increases the player's attack damage by 1, per collected. Reset when the player leaves the world.
+ * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296
+ *
+ */
 public class DamagePerk extends Item {
     
     // Constructor

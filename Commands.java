@@ -138,7 +138,7 @@ public class Commands {
                 // Extracting other information
                 while (gameFileRead.hasNextLine()) {
                     String line = gameFileRead.nextLine();
-                    charClassifier(line, fileMap);
+                    charClassifier(line, fileMap, player);
 
                 }
             } else {
@@ -259,12 +259,14 @@ public class Commands {
     }
     
     // Classifier to determine where the information belongs to
-    private void charClassifier (String line, Map fileMap) {
+    private void charClassifier (String line, Map fileMap, Player player) {
         char firstChar = line.charAt(0);
         switch (firstChar) {
             case 'p':
+                fileMap.gatherPlayerLoc(line, player);
                 break;
             case 'm':
+                fileMap.makeNewMonster(line);
                 break;
             case 'i':
                 break;

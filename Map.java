@@ -22,6 +22,9 @@ public class Map implements Traversable {
     private int mapWidth; 
 	private int mapHeight;
     private ArrayList<StringBuilder> mapRows;
+    private ArrayList<Player> playerList;
+    private ArrayList<Monster> monsterList;
+    private ArrayList<Item> itemList;
     private int playerPosX;
     private int playerPosY;
     private int monsterPosX;
@@ -76,26 +79,8 @@ public class Map implements Traversable {
     public void printMap (ArrayList<String> mapRows) {}
 
     // Unit file input info
-    public void setPlayerPosition (String line) {
-        
-        int[] location = gatherPlayerLoc(line);
-        setPlayerLocation(location[0], location[1]);
-        
-    }
-
-    public void setMonsterPosition (String line) {
-        
-        String[] location = gatherMonsterInfo(line);
-        setMonsterLocation(Integer.parseInt(location[0]), Integer.parseInt(location[1]));
-        
-    }
-
-    public void setItemPosition (String line) {
-        
-    }
-
     // Gather player location from file input
-    private int[] gatherPlayerLoc (String line) {
+    public void gatherPlayerLoc (String line, Player player) {
 
         int[] locSet = new int[2];
         String[] sepLine = line.split (" ");
@@ -107,11 +92,12 @@ public class Map implements Traversable {
             locSet[loopIndex - 1] = number;
             loopIndex -= 1;
         }
-        return locSet;
+        player.setPlayerLocation(locSet[0], locSet[1]);
+        playerList.add(player);
     }
 
-    // Gather monster location from
-    private String[] gatherMonsterInfo (String line) {
+    // Gather monster Information and create a new monster
+    public void makeNewMonster (String line) {
 
         String[] infoSet = new String[4];
         String[] sepLine = line.split(" ");
@@ -122,18 +108,12 @@ public class Map implements Traversable {
             infoSet[loopIndex - 1] = sepLine[loopIndex];
             loopIndex -= 1;
         }
-        return infoSet;
+        Monster monster = new Monster(infoSet);
+        monsterList.add(monster);
+        
     }
 
-    // Set player location after user's input
-    private void setPlayerLocation (int x, int y) {
-        this.playerPosX = x;
-        this.playerPosY = y;
-    }
+    // Gather Item Information and create new item
+    
 
-    // Set monster location after user's input
-    private void setMonsterLocation (int x, int y) {
-        this.monsterPosX = x;
-        this.monsterPosY = y;
-    }
 }

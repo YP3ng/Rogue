@@ -72,6 +72,12 @@ public class Player extends Unit {
     // Attack damage getter
     public int getDamage () {return this.attackDamage (this.level);}
 
+    // Set player location after user's input
+    public void setPlayerLocation (int x, int y) {
+        this.playerPosX = x;
+        this.playerPosY = y;
+    }
+
     // MaxHealth method
     private int maxHealth (int level) {
         int maxHealth = 17 + level * 3;
@@ -84,9 +90,5 @@ public class Player extends Unit {
         return damage;
     }
 
-    // Set player location after user's input
-    private void setPlayerLocation (int x, int y) {
-        this.playerPosX = x;
-        this.playerPosY = y;
-    }
+    
 }

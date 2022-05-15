@@ -9,15 +9,21 @@ public class Monster extends Unit {
     private int maxHealth;
     private int damage;
     private int curHealth;
-    // protected int monsterPosX;
-    // protected int monsterPosY;
+    private int monsterPosX;
+    private int monsterPosY;
 
     // Constructor
     public Monster (String name) {
         super(name);
     }
 
-    public Monster () {}
+    public Monster (String[] infoSet) {
+        super(infoSet[2]);
+        this.setMaxHealth(Integer.parseInt(infoSet[3]));
+        this.setCurHealth(getMaxHealth());
+        this.setDamage(Integer.parseInt(infoSet[4]));
+        this.setMonsterLocation(Integer.parseInt(infoSet[0]), Integer.parseInt(infoSet[1]));
+    }
 
     // Print monster info
     @Override
@@ -79,7 +85,7 @@ public class Monster extends Unit {
     public int getDamage () {return this.damage;}
 
     // Set monster location
-    private void setMonsterLocation (int x, int y) {
+    public void setMonsterLocation (int x, int y) {
         this.monsterPosX = x;
         this.monsterPosY = y;
     }
