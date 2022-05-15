@@ -7,6 +7,7 @@
  *
  */
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,11 +21,13 @@ public class Map implements Traversable {
 	public static final int DEFAULT_MAP_HEIGHT = 4;
     private int mapWidth; 
 	private int mapHeight;
+    private ArrayList<String> mapRows;
     
     // Constructor
     public Map(int Width, int Height) {
         this.setHeight(Height);
         this.setWidth(Width);
+        this.mapRows = new ArrayList<String>(mapHeight);
     }
 
     public Map() {}
@@ -38,29 +41,6 @@ public class Map implements Traversable {
 
     public void mapping () {}
 
-
-    // Print map function
-    private void printMap (
-        int mapWidth, int mapHeight, 
-        int playerX, int playerY, 
-        int monsterX, int monsterY,
-        char pFirstChar, char mFirstChar
-    ) {
-		for (int i = 0; i < mapHeight; i++) {
-			for (int j = 0; j < mapWidth; j++) {
-				if (playerX == j && playerY == i) { 		  
-					System.out.printf ("%c", pFirstChar);	  
-				} else if (monsterX == j && monsterY == i) {
-					System.out.printf ("%c", mFirstChar);
-				} else {
-					System.out.print (".");
-				}
-			}
-			System.out.println ();
-		}
-		System.out.println ();
-		
-	}
 
     // Three different terrain
     public void normalGround() {
@@ -82,4 +62,12 @@ public class Map implements Traversable {
     public void setHeight (int hei) {
         this.mapHeight = hei;
     }
+
+    // Setter for map rows
+    public void setRows (String line) {
+        mapRows.add(line);
+    }
+
+    // Print map function
+    public void printMap (ArrayList<String> mapRows) {}
 }

@@ -138,6 +138,7 @@ public class Commands {
                 // Extracting other information
                 while (gameFileRead.hasNextLine()) {
                     String line = gameFileRead.nextLine();
+                    charClassifier(line, fileMap);
 
                 }
             } else {
@@ -145,7 +146,7 @@ public class Commands {
                 Map defaultMap = new Map();
             }
             
-                
+            
         } else { // No file input, set a default map
             Map defaultMap = new Map();
         }
@@ -258,24 +259,24 @@ public class Commands {
     }
     
     // Classifier to determine where the information belongs to
-    private void classifier (String line) {
-        try {
-            String[] lineArgs = line.split(" ");
-        } catch (Exception e) {
-            switch () {
-                case "player":
-                    break;
-                case "monster":
-                    break;
-                case "item":
-                    break;
-                case ".":
-                    break;
-                case "~":
-                    break;
-                case "#":
-                    break;
-            }    
+    private void charClassifier (String line, Map fileMap) {
+        char firstChar = line.charAt(0);
+        switch (firstChar) {
+            case 'p':
+                break;
+            case 'm':
+                break;
+            case 'i':
+                break;
+            case '.':
+                fileMap.setRows(line);
+                break;
+            case '~':
+                fileMap.setRows(line);
+                break;
+            case '#':
+                fileMap.setRows(line);
+                break;
         }
     }
 
