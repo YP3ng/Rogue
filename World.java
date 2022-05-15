@@ -11,6 +11,8 @@
  */
 import java.util.Set;
 import java.util.Scanner;
+//TODO: This default version of Rogue map need to be merged with Map class.
+//This class should control movement, battlecheck, and item interactions.
  public class World {
     
     public static final int MAP_WIDTH = 6; // Final static since the size of map and location of monster won't change

@@ -8,12 +8,6 @@
  */
 
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.FileInputStream;
-
-
 public class Map implements Traversable {
 
     // Map size in assignment one, set as default map size if no file input exist
@@ -47,6 +41,7 @@ public class Map implements Traversable {
         return false;
     }
 
+    // TODO: Start with this method next time
     public void mapping () {}
 
 
