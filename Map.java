@@ -15,6 +15,9 @@ import java.io.FileInputStream;
 
 public class Map implements Traversable {
 
+    // Map size in assignment one, set as default map size if no file input exist
+    public static final int DEFAULT_MAP_WIDTH = 6; 
+	public static final int DEFAULT_MAP_HEIGHT = 4;
     private int mapWidth; 
 	private int mapHeight;
     

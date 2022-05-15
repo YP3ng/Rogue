@@ -40,7 +40,7 @@ public class Commands {
     public void player (Player player, Scanner scan) {
         System.out.println ("What is your character's name?");
 
-        // Configure player name
+        // FileInputure player name
         String input = scan.nextLine ();
         // Validate input. If invalid, redo the process
         if (validateInputText (input)) {player (player, scan);}
@@ -59,7 +59,7 @@ public class Commands {
         // Loop for input validation
         boolean isDone = false;
         while (!isDone) {
-            // Configure name
+            // FileInputure name
             System.out.print ("Monster name: ");
             String input = scan.nextLine();
             if (validateInputText (input)) {continue;};
@@ -67,7 +67,7 @@ public class Commands {
             String[] nameInput = cleanInputText(input);
             monster.setName (nameInput[0]);
 
-            // Configure health
+            // FileInputure health
             System.out.print ("Monster health: ");
             input = scan.nextLine ();
             if (validateInputInt(input)) {continue;};
@@ -76,7 +76,7 @@ public class Commands {
             monster.setMaxHealth (parseStrToInt(healthVal).get(0));
             monster.setCurHealth (parseStrToInt(healthVal).get(0));
 
-            // Configure damage
+            // FileInputure damage
             System.out.print ("Monster damage: ");
             input = scan.nextLine();
             if (validateInputInt (input)) {continue;}
@@ -120,28 +120,36 @@ public class Commands {
             Scanner gameFileRead = null;
 
             try {
-            gameFileRead =gameFileRead(fileName);
+                gameFileRead =gameFileRead(fileName);
             } catch (GameLevelNotFoundException e) {
                 System.out.println(e.getMessage());
                 System.exit(1); // Should return to menu, not exit the program
             }
 
-            // Extracting the size of the map
+            // Extracting the information of the map
             if (gameFileRead.hasNextLine()) {
+                
+                // Extract map size
                 String mapSize = gameFileRead.nextLine();
                 String [] mapInfo = mapInfo(mapSize);
                 ArrayList<Integer> mapInfoList = parseStrToInt(mapInfo);
                 Map fileMap = new Map(mapInfoList.get(0), mapInfoList.get(1));
-            }
-
-            // Extracting other information
-            while (gameFileRead.hasNextLine()) {
-                String line = gameFileRead.nextLine();
                 
+                // Extracting other information
+                while (gameFileRead.hasNextLine()) {
+                    String line = gameFileRead.nextLine();
 
-
+                }
+            } else {
+                System.out.println("There is something wrong with this file input, a default map is implemented.");
+                Map defaultMap = new Map();
             }
+            
+                
+        } else { // No file input, set a default map
+            Map defaultMap = new Map();
         }
+
         world.gameWorld (world, player, monster, scan, battle, commands); // Game world with no input file
     }
 
@@ -281,4 +289,16 @@ public class Commands {
         }
     }
 
+    // Unit file input info
+    private String[] playerFileInput (String line) {
+        return null;
+    }
+
+    private String[] monsterFileInput (String line) {
+        return null;
+    }
+
+    private String[] itemFileInput (String line) {
+        return null;
+    }
 }
