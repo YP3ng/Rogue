@@ -1,4 +1,3 @@
-import javax.swing.AbstractAction;
 
 /**
  * Three items
@@ -12,6 +11,7 @@ public abstract class Item extends Entity {
     }
 
     public abstract void effect(Player player);
+    public abstract void afterEncounter();
     // Set Item location
     public abstract void setItemLocation (int x, int y);
     // Get Item location
