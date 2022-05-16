@@ -57,6 +57,13 @@ public class Player extends Unit {
     public void setName (String x) {this.name = x;}
     // Name getter
     public String getName () {return this.name;}
+    // Name first char getter
+    public char getNameChar () {
+        String name = this.name.toUpperCase();
+        char N = name.charAt(0);
+        return N;
+    }
+
 
     // Level setter
     public void setLevel (int x) {this.level = x;}

@@ -71,6 +71,12 @@ public class Monster extends Unit {
     public void setName (String x) {this.name = x;}
     // Name getter
     public String getName () {return this.name;}
+    // First char getter
+    public char getNameChar () {
+        String name = this.name.toLowerCase();
+        char n = name.charAt(0);
+        return n;
+    }
 
     // Max health setter
     public void setMaxHealth (int x) {this.maxHealth = x;}

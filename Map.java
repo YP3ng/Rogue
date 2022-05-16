@@ -67,8 +67,8 @@ public class Map implements Traversable {
         mapRows.add(new StringBuilder(line)); // Use StringBuilder to make sure the line is mutable
     }
 
-    // TODO: Start with this method next time
-    public void mapping () {
+    // Update entities' location and then print out, row by row
+    public void fileMapping () {
 
         int index = 0;
         // Print rows from maprRows
@@ -85,6 +85,13 @@ public class Map implements Traversable {
             System.out.println(row);
             index += 1;
         }
+    }
+
+    // Update
+    public void defaultMappint () {
+
+        
+
     }
 
 
@@ -158,11 +165,11 @@ public class Map implements Traversable {
     // Update mapRows based on monster location
     private void updateMonsterRow (int index, StringBuilder row) {
 
-        // loop through item list
-        for (Item item : itemList) {
-            // Update row if item on that line
-            if (index == item.getItemPosY()) {
-                row.setCharAt(item.getItemPosX(), item.getItemName());
+        // loop through monster list
+        for (Monster monster : monsterList) {
+            // Update row if monster on that line
+            if (index == monster.getMonsterPosY()) {
+                row.setCharAt(monster.getMonsterPosX(), monster.getNameChar());
                 mapRows.set(index, row);
             }
 
@@ -172,15 +179,37 @@ public class Map implements Traversable {
     // Update mapRows based on player location
     private void updatePlayerRow (int index, StringBuilder row) {
 
-        // loop through item list
-        for (Item item : itemList) {
-            // Update row if item on that line
-            if (index == item.getItemPosY()) {
-                row.setCharAt(item.getItemPosX(), item.getItemName());
+        // loop through player list
+        for (Player player : playerList) {
+            // Update row if player on that line
+            if (index == player.getPlayerPosY()) {
+                row.setCharAt(player.getPlayerPosX(), player.getNameChar());
                 mapRows.set(index, row);
             }
 
         }
     }
 
+    // Print map function
+    private void printMap (
+        int mapWidth, int mapHeight, 
+        int playerX, int playerY, 
+        int monsterX, int monsterY,
+        char pFirstChar, char mFirstChar
+    ) {
+        for (int i = 0; i < mapHeight; i++) {
+            for (int j = 0; j < mapWidth; j++) {
+                if (playerX == j && playerY == i) { 		  
+                    System.out.printf ("%c", pFirstChar);	  
+                } else if (monsterX == j && monsterY == i) {
+                    System.out.printf ("%c", mFirstChar);
+                } else {
+                    System.out.print (".");
+                }
+            }
+            System.out.println ();
+        }
+        System.out.println ();
+        
+    }
 }
