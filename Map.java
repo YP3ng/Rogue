@@ -11,18 +11,18 @@ import java.util.ArrayList;
 public class Map implements Traversable {
 
     // Map size in assignment one, set as default map size if no file input exist
-    public static final int DEFAULT_MAP_WIDTH = 6; 
+    public static final int DEFAULT_MAP_WIDTH = 6; // Final static since the size of map and location of monster won't change
 	public static final int DEFAULT_MAP_HEIGHT = 4;
+	public static final int DEFAULT_MONSTER_X = 4;
+	public static final int DEFAULT_MONSTER_Y = 2;
+    public static final int DEFAULT_PLAYER_X = 2;
+    public static final int DEFAULT_PLAYER_Y = 2;
     private int mapWidth; 
 	private int mapHeight;
     private ArrayList<StringBuilder> mapRows;
     private ArrayList<Player> playerList;
     private ArrayList<Monster> monsterList;
     private ArrayList<Item> itemList;
-    private int playerPosX;
-    private int playerPosY;
-    private int monsterPosX;
-    private int monsterPosY;
     
     // Constructor
     public Map(int Width, int Height) {
@@ -85,13 +85,26 @@ public class Map implements Traversable {
             System.out.println(row);
             index += 1;
         }
+        System.out.println();
     }
 
     // Update
-    public void defaultMappint () {
+    public void defaultMapping (Player player, Monster monster) {
 
-        
-
+        for (int i = 0; i < DEFAULT_MAP_HEIGHT; i++) {
+            for (int j = 0; j < DEFAULT_MAP_WIDTH; j++) {
+                if (DEFAULT_PLAYER_X == j && DEFAULT_PLAYER_Y == i) { 		  
+                    System.out.printf ("%c", player.getNameChar());	  
+                } else if (DEFAULT_PLAYER_X == j && DEFAULT_MONSTER_Y == i) {
+                    System.out.printf ("%c", monster.getNameChar());
+                } else {
+                    System.out.print (".");
+                }
+            }
+            System.out.println ();
+        }
+        System.out.println ();
+    
     }
 
 
@@ -190,26 +203,4 @@ public class Map implements Traversable {
         }
     }
 
-    // Print map function
-    private void printMap (
-        int mapWidth, int mapHeight, 
-        int playerX, int playerY, 
-        int monsterX, int monsterY,
-        char pFirstChar, char mFirstChar
-    ) {
-        for (int i = 0; i < mapHeight; i++) {
-            for (int j = 0; j < mapWidth; j++) {
-                if (playerX == j && playerY == i) { 		  
-                    System.out.printf ("%c", pFirstChar);	  
-                } else if (monsterX == j && monsterY == i) {
-                    System.out.printf ("%c", mFirstChar);
-                } else {
-                    System.out.print (".");
-                }
-            }
-            System.out.println ();
-        }
-        System.out.println ();
-        
-    }
 }

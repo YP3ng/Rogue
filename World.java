@@ -23,11 +23,8 @@ import java.util.Scanner;
     private int playerX; // Initial location of player is (1, 1), change by user I/O
 	private int playerY;
 
-    // Constructor
-    public World () {
-        this.playerX = 1; // Initialise player location (1, 1)
-        this.playerY = 1;
-    }
+    // Default constructor
+    public World () {}
 
     public void gameWorld (
         Player player, Monster monster, 
