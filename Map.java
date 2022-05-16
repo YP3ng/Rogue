@@ -40,17 +40,6 @@ public class Map implements Traversable {
         if (type == ".") {return true;}
         return false;
     }
-
-    // Three different terrain
-    public void normalGround() {
-        System.out.print(".");
-    }
-    public void mountains() {
-        System.out.print("#");
-    }
-    public void water() {
-        System.out.print("~");
-    }
     
     // Setter for map width
     public void setWidth (int wid) {
@@ -66,6 +55,13 @@ public class Map implements Traversable {
     public void setRows (String line) {
         mapRows.add(new StringBuilder(line)); // Use StringBuilder to make sure the line is mutable
     }
+
+    // Playerlist getter
+    public ArrayList<Player> getPlayerList () {return this.playerList;}
+    // Monsterlist getter
+    public ArrayList<Monster> getMonsterList () {return this.monsterList;}
+    // Itemlist getter
+    public ArrayList<Item> getItemList () {return this.itemList;}
 
     // Update entities' location and then print out, row by row
     public void fileMapping () {

@@ -141,9 +141,6 @@ public class Commands {
                     charClassifier(line, fileMap, player);
 
                 }
-            } else {
-                System.out.println("There is something wrong with this file input, a default map is implemented.");
-                Map defaultMap = new Map();
             }
             
             

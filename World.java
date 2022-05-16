@@ -11,6 +11,7 @@
  */
 import java.util.Set;
 import java.util.Scanner;
+import java.util.ArrayList;
 //TODO: This default version of Rogue map need to be merged with Map class.
 //This class should control movement, battlecheck, and item interactions.
  public class World {
@@ -20,11 +21,28 @@ import java.util.Scanner;
 	public static final int MONSTER_X = 4;
 	public static final int MONSTER_Y = 2;
     public static final Set<String> ALLOWED_MOVEMENT = Set.of ("w", "a", "s", "d", "home");
-    private int playerX; // Initial location of player is (1, 1), change by user I/O
-	private int playerY;
+    private Player player; // Initial location of player is (1, 1), change by user I/O
+	private Monster monster;
+
+    private ArrayList<Player> playerList;
+    private ArrayList<Monster> monsterList;
+    private ArrayList<Item> itemList;
+    private Map map;
 
     // Default constructor
-    public World () {}
+    public World (Player player, Monster monster, Map map) {
+        this.map = map;
+        this.player = player;
+        this.monster = monster;
+    }
+
+    // Fileinput constructor
+    public World (Map map) {
+        this.map = map;
+        this.playerList = map.getPlayerList();
+        this.monsterList = map.getMonsterList();
+        this.itemList = map.getItemList();
+    }
 
     public void gameWorld (
         Player player, Monster monster, 

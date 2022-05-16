@@ -27,10 +27,10 @@ public class GameEngine {
 		// User I/O
 		Scanner scan = new Scanner (System.in);
 		//TODO: Might not need to initialise instance here.
-		World world = new World ();
 		Player player = new Player ();
 		Monster monster = new Monster ();
 		Commands commands = new Commands ();
+		World world = new World (player, monster);
 		Battle battle = new Battle ();
 		
 		// Call menu
