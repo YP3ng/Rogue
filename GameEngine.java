@@ -30,7 +30,7 @@ public class GameEngine {
 		Player player = new Player ();
 		Monster monster = new Monster ();
 		Commands commands = new Commands ();
-		World world = new World (player, monster);
+		World world = new World ();
 		Battle battle = new Battle ();
 		
 		// Call menu

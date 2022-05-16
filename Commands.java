@@ -142,13 +142,13 @@ public class Commands {
 
                 }
             }
-            
+            world.gameWorld(scan, commands, "file");
             
         } else { // No file input, set a default map
             Map defaultMap = new Map();
         }
 
-        world.gameWorld (player, monster, scan, battle, commands); // Game world with no input file
+        world.gameWorld (scan,commands, "default"); // Game world with no input file
     }
 
     public void save () {};

@@ -32,7 +32,10 @@ public class Map implements Traversable {
     }
 
     // for default map 
-    public Map() {}
+    public Map() {
+        this.mapWidth = DEFAULT_MAP_WIDTH;
+        this.mapHeight = DEFAULT_MAP_HEIGHT;
+    }
 
     @Override
     // Normal ground can be traversed, others can't
@@ -45,11 +48,15 @@ public class Map implements Traversable {
     public void setWidth (int wid) {
         this.mapWidth = wid;
     }
-
+    // Getter for map width
+    public int getWidth () {return this.mapWidth;}
+    
     // Setter for map Height
     public void setHeight (int hei) {
         this.mapHeight = hei;
     }
+    // Getter for map Height
+    public int getHeight () {return this.mapHeight;}
 
     // Setter for map rows
     public void setRows (String line) {
@@ -89,9 +96,9 @@ public class Map implements Traversable {
 
         for (int i = 0; i < DEFAULT_MAP_HEIGHT; i++) {
             for (int j = 0; j < DEFAULT_MAP_WIDTH; j++) {
-                if (DEFAULT_PLAYER_X == j && DEFAULT_PLAYER_Y == i) { 		  
+                if (player.getPlayerPosX() == j && player.getPlayerPosY() == i) { 		  
                     System.out.printf ("%c", player.getNameChar());	  
-                } else if (DEFAULT_PLAYER_X == j && DEFAULT_MONSTER_Y == i) {
+                } else if (monster.getMonsterPosX() == j && monster.getMonsterPosY() == i) {
                     System.out.printf ("%c", monster.getNameChar());
                 } else {
                     System.out.print (".");

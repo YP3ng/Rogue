@@ -12,7 +12,6 @@
 import java.util.Set;
 import java.util.Scanner;
 import java.util.ArrayList;
-//TODO: This default version of Rogue map need to be merged with Map class.
 //This class should control movement, battlecheck, and item interactions.
  public class World {
     
@@ -44,10 +43,11 @@ import java.util.ArrayList;
         this.itemList = map.getItemList();
     }
 
-    public void gameWorld (
-        Player player, Monster monster, 
-        Scanner movement, Battle battle, Commands commands
-        ) {
+    // Dummy constructor
+    public World () {}
+
+    // TODO: need to add filemapping process
+    public void gameWorld (Scanner movement, Commands commands, String fileOrDefault) {
         
         // Start the advanture
         boolean isEnd = false;
@@ -56,67 +56,33 @@ import java.util.ArrayList;
         while (!isEnd) {
 
             // Print out the map
-            printMap (
-                MAP_WIDTH, MAP_HEIGHT, 
-                playerX, playerY,
-                MONSTER_X, MONSTER_Y,
-                nameOnMap (player.getName ().toUpperCase ()),
-                nameOnMap (monster.getName ().toLowerCase ())
-            );
-            prompt();
-			
-            // Validating input directions and player won't be out of boundary after moving
-            String direction = inputForMap (movement);
-            if (validateDirection (direction)) {continue;}
-            if (validateMove (direction)) {continue;}
+            if (fileOrDefault == "default") {
+                map.defaultMapping(player, monster);
+                prompt();
+                
+                // Validating input directions and player won't be out of boundary after moving
+                String direction = inputForMap (movement);
+                if (validateDirection (direction)) {continue;}
+                if (validateMove (direction)) {continue;}
 
-            // If home is typed, return to menu
-            if (direction == "home") {
-                home (isEnd);
-                break;
+                // If home is typed, return to menu
+                if (direction == "home") {
+                    home (isEnd);
+                    break;
+                }
+                
+                player.movement(direction);
+
+                // Check if player meets monster
+                if (encounterCheck (player)) {
+                    Battle defaultBattle = new Battle(player, monster);
+                    defaultBattle.battleLoop(commands);
+
+                }
             }
-            
-            // Update mosnter location information
-
-            // Update player location information
-            player.movement(direction);
-
-            // Check if player meets monster
-            if (encounterCheck (playerX, playerY)) {
-                battle.battleLoop(player, monster, commands);
-                // if player lose, return to menu
-                // if monster lose, monster removed
-                // if more than one monster encounter player, battle starts one by one.
-            }
-
-            // Check if player meets items
             
         }
     }
-    
-    
-    // Print map function
-    private void printMap (
-        int mapWidth, int mapHeight, 
-        int playerX, int playerY, 
-        int monsterX, int monsterY,
-        char pFirstChar, char mFirstChar
-    ) {
-		for (int i = 0; i < mapHeight; i++) {
-			for (int j = 0; j < mapWidth; j++) {
-				if (playerX == j && playerY == i) { 		  
-					System.out.printf ("%c", pFirstChar);	  
-				} else if (monsterX == j && monsterY == i) {
-					System.out.printf ("%c", mFirstChar);
-				} else {
-					System.out.print (".");
-				}
-			}
-			System.out.println ();
-		}
-		System.out.println ();
-		
-	}
 
     // Reminder for user to type
     private void prompt () {
@@ -134,16 +100,16 @@ import java.util.ArrayList;
     private boolean validateMove (String input) {
         switch (input) {
             case "w":
-                if (this.playerY - 1 < 0) {return true;}
+                if (this.player.getPlayerPosY() - 1 < 0) {return true;}
                 break;
             case "a":
-                if (this.playerX - 1 < 0) {return true;}
+                if (this.player.getPlayerPosX() - 1 < 0) {return true;}
                 break;
             case "s":
-                if (this.playerY + 1 > MAP_HEIGHT - 1) {return true;}
+                if (this.player.getPlayerPosY() + 1 > map.getHeight() - 1) {return true;}
                 break;
             case "d":
-                if (this.playerX + 1 > MAP_WIDTH - 1) {return true;}
+                if (this.player.getPlayerPosX() + 1 > map.getWidth() - 1) {return true;}
                 break;
             case "home": break;
         }
@@ -158,8 +124,8 @@ import java.util.ArrayList;
 	}
 
     // Battle encounter check
-    private boolean encounterCheck (int playerX, int playerY) {
-        if (playerX == MONSTER_X && playerY == MONSTER_Y) {return true;}
+    private boolean encounterCheck (Player player) {
+        if (player.getPlayerPosX() == MONSTER_X && player.getPlayerPosY() == MONSTER_Y) {return true;}
         return false;
     }
     
@@ -169,9 +135,4 @@ import java.util.ArrayList;
         return isEnd = true;
     }
 
-    // Decide names on the map
-    private char nameOnMap (String name) {
-        char firstChar = name.charAt(0);
-        return firstChar;
-    }
 }

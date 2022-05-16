@@ -6,7 +6,21 @@
  */
 
 public class Battle {
-    public void battleLoop(Player player, Monster monster, Commands commands) {
+
+    private Player player;
+    private Monster monster;
+    
+    // Default battle constructor
+    public Battle (Player player, Monster monster) {
+
+        this.player = player;
+        this.monster = monster;
+    }
+
+    // Dummy constructor
+    public Battle () {}
+    
+    public void battleLoop(Commands commands) {
 
         // Battle starts
         System.out.printf("%s encountered a %s!\n\n", player.getName(), monster.getName());
