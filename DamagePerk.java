@@ -32,4 +32,7 @@ public class DamagePerk extends Item {
     // Get Item location
     public int getItemPosX () {return damagePerkPosX;};
     public int getItemPosY () {return damagePerkPosY;};
+
+    // Get Item name
+    public char getItemName () {return name.charAt(0);}
 }

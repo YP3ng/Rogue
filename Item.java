@@ -17,4 +17,5 @@ public abstract class Item extends Entity {
     // Get Item location
     public abstract int getItemPosX ();
     public abstract int getItemPosY ();
+    public abstract char getItemName ();
 }

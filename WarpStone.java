@@ -35,4 +35,7 @@ public class WarpStone extends Item {
     // Get Item location
     public int getItemPosX () {return warpStonePosX;};
     public int getItemPosY () {return warpStonePosY;};
+
+    // Get Item name
+    public char getItemName () {return name.charAt(0);}
 }

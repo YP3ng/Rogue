@@ -41,10 +41,6 @@ public class Map implements Traversable {
         return false;
     }
 
-    // TODO: Start with this method next time
-    public void mapping () {}
-
-
     // Three different terrain
     public void normalGround() {
         System.out.print(".");
@@ -71,8 +67,26 @@ public class Map implements Traversable {
         mapRows.add(new StringBuilder(line)); // Use StringBuilder to make sure the line is mutable
     }
 
-    // Print map function
-    public void printMap (ArrayList<String> mapRows) {}
+    // TODO: Start with this method next time
+    public void mapping () {
+
+        int index = 0;
+        // Print rows from maprRows
+        // Player > monster > item, if their locations are the same
+        for (StringBuilder row : mapRows) {
+
+            // Check item location and update if needed
+            this.updateItemRow(index, row);
+            // Check monster location
+            this.updateMonsterRow(index, row);
+            // Check player location 
+            this.updatePlayerRow(index, row);   
+
+            System.out.println(row);
+            index += 1;
+        }
+    }
+
 
     // Unit file input info
     // Gather player location from file input
@@ -99,15 +113,15 @@ public class Map implements Traversable {
 
         switch (itemData[2]) {
             case "+":
-                HealingItem healItem = new HealingItem("heal", itemData);
+                HealingItem healItem = new HealingItem("+", itemData);
                 itemList.add(healItem);
                 break;
             case "^":
-                DamagePerk damageItem = new DamagePerk("damage", itemData);
+                DamagePerk damageItem = new DamagePerk("^", itemData);
                 itemList.add(damageItem);
                 break;
             case "@":
-                WarpStone stoneItem = new WarpStone("stone", itemData);
+                WarpStone stoneItem = new WarpStone("@", itemData);
                 itemList.add(stoneItem);
                 break;
         }
@@ -125,6 +139,48 @@ public class Map implements Traversable {
             loopIndex += 1;
         }
         return infoSet;
+    }
+
+    // Update mapRows based on item location
+    private void updateItemRow (int index, StringBuilder row) {
+
+        // loop through item list
+        for (Item item : itemList) {
+            // Update row if item on that line
+            if (index == item.getItemPosY()) {
+                row.setCharAt(item.getItemPosX(), item.getItemName());
+                mapRows.set(index, row);
+            }
+
+        }
+    }
+
+    // Update mapRows based on monster location
+    private void updateMonsterRow (int index, StringBuilder row) {
+
+        // loop through item list
+        for (Item item : itemList) {
+            // Update row if item on that line
+            if (index == item.getItemPosY()) {
+                row.setCharAt(item.getItemPosX(), item.getItemName());
+                mapRows.set(index, row);
+            }
+
+        }
+    }
+
+    // Update mapRows based on player location
+    private void updatePlayerRow (int index, StringBuilder row) {
+
+        // loop through item list
+        for (Item item : itemList) {
+            // Update row if item on that line
+            if (index == item.getItemPosY()) {
+                row.setCharAt(item.getItemPosX(), item.getItemName());
+                mapRows.set(index, row);
+            }
+
+        }
     }
 
 }

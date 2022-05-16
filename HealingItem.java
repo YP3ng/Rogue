@@ -29,4 +29,7 @@ public class HealingItem extends Item {
     // Get Item location
     public int getItemPosX () {return healItemPosX;};
     public int getItemPosY () {return healItemPosY;};
+
+    // Get Item name
+    public char getItemName () {return name.charAt(0);}
 }
