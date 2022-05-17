@@ -34,7 +34,7 @@ public class Player extends Unit {
         System.out.print ("Health: " + this.getCurHealth() + "/" + this.getMaxHealth() + "\n\n");
     }
 
-    // Define the movement of player
+    // Define the default movement of player
     public void movement (String direction) {
         switch (direction) {
             case "w":
@@ -52,20 +52,32 @@ public class Player extends Unit {
         }
     }
 
-    // Define the movement of player
+    // Define the movement of player, consider traversable
     public void movement (String direction, Map map) {
         switch (direction) {
             case "w":
-                setPlayerLocation (playerPosX, playerPosY - 1);
+                // Check if future movement is traversable
+                if (map.canTraverse(playerPosX, playerPosY, "up")) {
+                    setPlayerLocation (playerPosX, playerPosY - 1);
+                }
                 break;
             case "a":
-                setPlayerLocation (playerPosX - 1, playerPosY);
+                // Check if future movement is traversable
+                if (map.canTraverse(playerPosX, playerPosY, "left")) {
+                    setPlayerLocation (playerPosX - 1, playerPosY);
+                }
                 break;
             case "s":
-                setPlayerLocation (playerPosX, playerPosY + 1);
+                // Check if future movement is traversable
+                if (map.canTraverse(playerPosX, playerPosY, "down")) {
+                    setPlayerLocation (playerPosX, playerPosY + 1);
+                }
                 break;
             case "d":
-                setPlayerLocation (playerPosX + 1, playerPosY);
+                // Check if future movement is traversable
+                if (map.canTraverse(playerPosX, playerPosY, "right")) {
+                    setPlayerLocation (playerPosX + 1, playerPosY);
+                }
                 break;
         }
     }

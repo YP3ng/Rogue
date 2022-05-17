@@ -20,7 +20,7 @@ import java.util.ArrayList;
 	public static final int MONSTER_X = 4;
 	public static final int MONSTER_Y = 2;
     public static final Set<String> ALLOWED_MOVEMENT = Set.of ("w", "a", "s", "d", "home");
-    private Player player; // Initial location of player is (1, 1), change by user I/O
+    private Player player;
 	private Monster monster;
 
     private ArrayList<Player> playerList;
@@ -74,7 +74,7 @@ import java.util.ArrayList;
                 player.movement(direction);
 
                 // Check if player meets monster
-                if (encounterCheck (player)) {
+                if (encounterCheck (player, monster)) {
                     Battle defaultBattle = new Battle(player, monster);
                     defaultBattle.battleLoop(commands);
 
@@ -111,7 +111,22 @@ import java.util.ArrayList;
                 }
                 
                 // Battle occurs before pick up item
+                for (Monster mon : monsterList) {
+                    if (encounterCheck(playerList.get(0), mon)) {
+                        Battle battle = new Battle(playerList.get(0), mon);
+                        battle.battleLoop(commands);
+                        // if player wins, continue. Lost monster removed
+                        // if player lose, return to menu
+                    };
+                }
 
+                // Check if items need to be picked
+                for (Item ite :itemList) {
+                    if(itemPickCheck(playerList.get(0), ite)) {
+                        ite.effect(playerList.get(0));
+                        
+                    }
+                }
             }
         }
     }
@@ -156,8 +171,8 @@ import java.util.ArrayList;
 	}
 
     // Battle encounter check
-    private boolean encounterCheck (Player player) {
-        if (player.getPlayerPosX() == MONSTER_X && player.getPlayerPosY() == MONSTER_Y) {return true;}
+    private boolean encounterCheck (Player player, Monster monster) {
+        if (player.getPlayerPosX() == monster.getMonsterPosX() && player.getPlayerPosY() == monster.getMonsterPosY()) {return true;}
         return false;
     }
     
@@ -167,4 +182,9 @@ import java.util.ArrayList;
         return isEnd = true;
     }
 
+    // Item location check
+    private boolean itemPickCheck (Player player, Item item) {
+        if (player.getPlayerPosX() == item.getItemPosX() && player.getPlayerPosY() == item.getItemPosY()) {return true;}
+        return false;
+    }
 }

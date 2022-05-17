@@ -18,6 +18,7 @@ public class HealingItem extends Item {
     @Override
     public void effect(Player player) {
 
+        System.out.println("Healed!");
         player.setCurHealth(player.getMaxHealth());
     }
 
