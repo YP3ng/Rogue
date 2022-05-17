@@ -4,5 +4,5 @@
  *
  */
 interface Traversable {
-    public boolean canTraverse(String type);
+    public boolean canTraverse(int x, int y, int movement, String direction);
 }

@@ -45,8 +45,11 @@ public class Monster extends Unit {
      * This version dosn't consider traversable issue and the option of not moving
      */
     @Override
-    public void movement(String direction) {
-        if (moveOrNot(playerPosX, playerPosY) == true) {
+    public void movement(String direction) {};
+
+    // Monster moving AI
+    public void movement(Map map) {
+        if (distCheck(playerPosX, playerPosY) == true) {
             switch (moveLogic()) {
                 case "w":
                 setMonsterLocation(monsterPosX, monsterPosY -1);
@@ -66,6 +69,42 @@ public class Monster extends Unit {
         }
     }
 
+    // If the monster starts to move or not
+    private boolean distCheck (int playerPosX, int playerPosY) {
+        if (distWithPlayer(monsterPosX, monsterPosY, playerPosX, playerPosY) <= 4) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    // Distance function with the player
+    private double distWithPlayer (int monsterPosX, int monsterPosY, int playerPosX, int playerPosY) {
+        double dist = Math.abs(monsterPosX - playerPosX) + Math.abs(monsterPosY - playerPosY);
+        return dist;
+    }
+
+    // determine which way to move
+    private String moveLogic () {
+        
+        // Decide left right movement
+        if (monsterPosX - playerPosX > 0) {
+            
+            return "a";
+        } else if (monsterPosX - playerPosX < 0) {
+            return "d";
+        }
+
+        // Decide up down movement
+        if (monsterPosY - playerPosY > 0) {
+            return "w";
+        } else if (monsterPosY - playerPosY < 0) {
+            return "s";
+        }
+        return "stay";
+
+        
+    }
 
     // Name setter
     public void setName (String x) {this.name = x;}
@@ -102,38 +141,4 @@ public class Monster extends Unit {
     public int getMonsterPosX () {return monsterPosX;}
     public int getMonsterPosY () {return monsterPosY;}
 
-    // If the monster starts to move or not
-    private boolean moveOrNot (int playerPosX, int playerPosY) {
-        if (distWithPlayer(playerPosX, playerPosY) <= 4) {
-            return true;
-        }
-        // Obstacle block
-
-        // move will increase distance
-
-        
-        return false;
-    }
-
-    // Distance function with the player
-    private double distWithPlayer (int playerPosX, int playerPosY) {
-        double dist = Math.abs(monsterPosX - playerPosX) + Math.abs(monsterPosY - playerPosY);
-        return dist;
-    }
-
-    // determine which way to move
-    // Traversable not considered
-    private String moveLogic () {
-        if (monsterPosX > playerPosX) {
-            return "a";
-        } else if (monsterPosX < playerPosX) {
-            return "d";
-        } else if (monsterPosX == playerPosX & monsterPosY > playerPosY) {
-            return "w";
-        } else if (monsterPosX == playerPosX & monsterPosY < playerPosY) {
-            return "s";
-        } else {
-            return "check code";
-        }
-    }
 }
