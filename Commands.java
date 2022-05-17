@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 
 
 public class Commands {
+    
     public static final Set<String> ALLOWED_COMMANDS = Set.of ("help", "player", "monster", "start", "exit", "commands", "save", "load");
     // Show users what commands are allowed
     public void commands () {

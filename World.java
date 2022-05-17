@@ -51,12 +51,11 @@ import java.util.ArrayList;
         
         // Start the advanture
         boolean isEnd = false;
-
+        if (fileOrDefault == "default") {
         // Start the game world loop
-        while (!isEnd) {
+            while (!isEnd) {
 
-            // Print out the map
-            if (fileOrDefault == "default") {
+                // Print out default map
                 map.defaultMapping(player, monster);
                 prompt();
                 
@@ -71,6 +70,7 @@ import java.util.ArrayList;
                     break;
                 }
                 
+                // Player move
                 player.movement(direction);
 
                 // Check if player meets monster
@@ -81,6 +81,31 @@ import java.util.ArrayList;
                 }
             }
             
+        } else if (fileOrDefault == "file") {
+
+            while (!isEnd) {
+
+                // Print out file input map
+                map.fileMapping();
+                prompt();
+
+                // Validating input directions and player won't be out of boundary after moving
+                String direction = inputForMap (movement);
+                if (validateDirection (direction)) {continue;}
+                if (validateMove (direction)) {continue;}
+
+                // If home is typed, return to menu
+                if (direction == "home") {
+                    home (isEnd);
+                    break;
+                }
+
+                // Monster move
+                // Check traversable
+
+                // Player move
+                // Check traversable
+            }
         }
     }
 
