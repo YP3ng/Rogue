@@ -52,6 +52,24 @@ public class Player extends Unit {
         }
     }
 
+    // Define the movement of player
+    public void movement (String direction, Map map) {
+        switch (direction) {
+            case "w":
+                setPlayerLocation (playerPosX, playerPosY - 1);
+                break;
+            case "a":
+                setPlayerLocation (playerPosX - 1, playerPosY);
+                break;
+            case "s":
+                setPlayerLocation (playerPosX, playerPosY + 1);
+                break;
+            case "d":
+                setPlayerLocation (playerPosX + 1, playerPosY);
+                break;
+        }
+    }
+
     // Name setter
     public void setName (String x) {this.name = x;}
     // Name getter

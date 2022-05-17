@@ -107,9 +107,10 @@ import java.util.ArrayList;
 
                 // Player move
                 for (Player player : playerList) {
-                    player.movement(direction);
+                    player.movement(direction, map);
                 }
-
+                
+                // Battle occurs before pick up item
 
             }
         }
