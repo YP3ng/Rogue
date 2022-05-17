@@ -102,12 +102,15 @@ import java.util.ArrayList;
 
                 // Monster move
                 for (Monster monster : monsterList) {
-                    monster.movement(direction);
+                    monster.movement(map);
                 }
-                // Check traversable
 
                 // Player move
-                // Check traversable
+                for (Player player : playerList) {
+                    player.movement(direction);
+                }
+
+
             }
         }
     }

@@ -39,43 +39,44 @@ public class Map implements Traversable {
 
     @Override
     // Normal ground can be traversed, others can't
-    public boolean canTraverse(int x, int y, int movement, String direction) {
+    public boolean canTraverse(int x, int y, String direction) {
 
-        
+        char type = extracTerrain(x, y, direction);
         if (type == '.') {return true;}
         return false;
 
     }
 
-    private char extracTerrain (String direction) {
+    private char extracTerrain (int x, int y, String direction) {
 
         StringBuilder row;
         char type;
-        switch (direction) {
 
-            // left right
-            case "leftRight":
-                row = mapRows.get(y);
-                type = row.charAt(x + movement);
-                return type;
-                break;
-            
+        if (direction == "left") {
+            // left
+            row = mapRows.get(y);
+            type = row.charAt(x - 1);
+            return type;
+
+        } else if (direction == "right") {
+            // right
+            row = mapRows.get(y);
+            type = row.charAt(x + 1);
+            return type;
+
+        } else if (direction == "up") {
             // up
-            case "up":
-                row = mapRows.get(y - 1);
-                type = row.charAt(x);
-                return type;
-                break;
-            
+            row = mapRows.get(y - 1);
+            type = row.charAt(x);
+            return type;
+
+        } else {
             // down
-            case "down":
-                row = mapRows.get(y + 1);
-                type = row.charAt(x);
-                return type;
-                break;
-                
-        
+            row = mapRows.get(y + 1);
+            type = row.charAt(x);
+            return type;
         }
+        
     }
     
     // Setter for map width

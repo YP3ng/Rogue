@@ -35,7 +35,6 @@ public class Player extends Unit {
     }
 
     // Define the movement of player
-    @Override
     public void movement (String direction) {
         switch (direction) {
             case "w":

@@ -44,13 +44,11 @@ public class Monster extends Unit {
      * 
      * This version dosn't consider traversable issue and the option of not moving
      */
-    @Override
-    public void movement(String direction) {};
 
     // Monster moving AI
     public void movement(Map map) {
-        if (distCheck(playerPosX, playerPosY) == true) {
-            switch (moveLogic()) {
+        if (distCheck(playerPosX, playerPosY)) {
+            switch (moveLogic(map)) {
                 case "w":
                 setMonsterLocation(monsterPosX, monsterPosY -1);
                 break;
@@ -63,8 +61,10 @@ public class Monster extends Unit {
                 case "d":
                 setMonsterLocation(monsterPosX + 1, monsterPosY);
                 break;
-                case "check code": // for development only, remove before upload
-                System.out.println("Movement logic goes wrong");
+                case "stay":
+                setMonsterLocation(monsterPosX, monsterPosY);
+                break;
+
             }
         }
     }
@@ -85,24 +85,38 @@ public class Monster extends Unit {
     }
 
     // determine which way to move
-    private String moveLogic () {
+    private String moveLogic (Map map) {
         
-        // Decide left right movement
+        // Determine relative location
+        // Player on monster's left hand side
         if (monsterPosX - playerPosX > 0) {
-            
-            return "a";
+            // Check if future movement is traversable
+            if (map.canTraverse(monsterPosX, monsterPosY, "left")) {
+                return "a";
+            }
+        // Player on monster's right hand side
         } else if (monsterPosX - playerPosX < 0) {
-            return "d";
+            // Check if future movement is traversable
+            if (map.canTraverse(monsterPosX, monsterPosY, "right")) {
+                return "d";
+            }
         }
 
-        // Decide up down movement
+        // Player above monster
         if (monsterPosY - playerPosY > 0) {
-            return "w";
+            // Check if future movement is traversable
+            if (map.canTraverse(monsterPosX, monsterPosY, "up")) {
+                return "w";
+            }
+        // Player under monster
         } else if (monsterPosY - playerPosY < 0) {
-            return "s";
+            // Check if future movement is traversable
+            if (map.canTraverse(monsterPosX, monsterPosY, "down")) {
+                return "s";
+            }
         }
+        // else stay
         return "stay";
-
         
     }
 
