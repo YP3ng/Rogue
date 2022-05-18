@@ -45,36 +45,39 @@ public class Monster extends Unit {
      */
 
     // Monster moving AI
-    public void movement(Map map) {
-        if (distCheck(playerPosX, playerPosY)) {
+    public void movement(Map map, Player player) {
+        if (distCheck(player)) {
             switch (moveLogic(map)) {
                 case "w":
-                //map.resetMapRows(monsterPosX, monsterPosY);
+                map.resetRow(monsterPosX, monsterPosY);
                 setMonsterLocation(monsterPosX, monsterPosY -1);
                 break;
                 case "a":
-                //map.resetMapRows(monsterPosX, monsterPosY);
+                map.resetRow(monsterPosX, monsterPosY);
                 setMonsterLocation(monsterPosX - 1, monsterPosY);
                 break;
                 case "s":
-                //map.resetMapRows(monsterPosX, monsterPosY);
+                map.resetRow(monsterPosX, monsterPosY);
                 setMonsterLocation(monsterPosX, monsterPosY + 1);
                 break;
                 case "d":
-                //map.resetMapRows(monsterPosX, monsterPosY);
+                map.resetRow(monsterPosX, monsterPosY);
                 setMonsterLocation(monsterPosX + 1, monsterPosY);
                 break;
                 case "stay":
                 setMonsterLocation(monsterPosX, monsterPosY);
                 break;
+                case "other":
+                System.out.println("movement goes to other");
 
             }
         }
     }
 
     // If the monster starts to move or not
-    private boolean distCheck (int playerPosX, int playerPosY) {
-        if (distWithPlayer(monsterPosX, monsterPosY, playerPosX, playerPosY) <= 4) {
+    private boolean distCheck (Player player) {
+        if (distWithPlayer(this.monsterPosX, this.monsterPosY, player.getPlayerPosX(), player.getPlayerPosY()) <= 4) {
+            System.out.println("distCheck activate");
             return true;
         }
         
@@ -88,39 +91,45 @@ public class Monster extends Unit {
     }
 
     // determine which way to move
-    private String moveLogic (Map map) {
+    private String moveLogic (Map map, Player player) {
         
+        System.out.println("moveLogic activate");
         // Determine relative location
         // Player on monster's left hand side
-        if (monsterPosX - playerPosX > 0) {
+        if (monsterPosX - player.getPlayerPosX() > 0) {
             // Check if future movement is traversable
             if (map.canTraverse(monsterPosX, monsterPosY, "left")) {
+                System.out.println("a returned");
                 return "a";
             }
         // Player on monster's right hand side
-        } else if (monsterPosX - playerPosX < 0) {
+        } else if (monsterPosX - player.getPlayerPosX() < 0) {
             // Check if future movement is traversable
             if (map.canTraverse(monsterPosX, monsterPosY, "right")) {
+                System.out.println("d returned");
                 return "d";
             }
         }
 
         // Player above monster
-        if (monsterPosY - playerPosY > 0) {
+        if (monsterPosY - player.getPlayerPosY() > 0) {
             // Check if future movement is traversable
             if (map.canTraverse(monsterPosX, monsterPosY, "up")) {
+                System.out.println("w returned");
                 return "w";
             }
         // Player under monster
-        } else if (monsterPosY - playerPosY < 0) {
+        } else if (monsterPosY - player.getPlayerPosY() < 0) {
             // Check if future movement is traversable
             if (map.canTraverse(monsterPosX, monsterPosY, "down")) {
+                System.out.println("s returned");
                 return "s";
             }
+        } else {
+            System.out.println("stay returned");
+            return "stay";
         }
-        // else stay
-        return "stay";
-        
+        return "other";
     }
 
     // Name setter

@@ -16,8 +16,6 @@ public class Player extends Unit {
         super(name);
         this.level = 1;
         this.curHealth = this.maxHealth (level);
-        // initialise player playerPosX, Y at defaul (1, 1)
-        this.setPlayerLocation(1, 1);
     }
 
     public Player () {

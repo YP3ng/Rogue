@@ -102,7 +102,7 @@ import java.util.ArrayList;
 
                 // Monster move
                 for (Monster monster : monsterList) {
-                    monster.movement(map);
+                    monster.movement(map, playerList.get(0));
                 }
 
                 // Player move
