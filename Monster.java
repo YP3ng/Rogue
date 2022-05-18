@@ -47,7 +47,7 @@ public class Monster extends Unit {
     // Monster moving AI
     public void movement(Map map, Player player) {
         if (distCheck(player)) {
-            switch (moveLogic(map)) {
+            switch (moveLogic(map, player)) {
                 case "w":
                 map.resetRow(monsterPosX, monsterPosY);
                 setMonsterLocation(monsterPosX, monsterPosY -1);
@@ -67,8 +67,6 @@ public class Monster extends Unit {
                 case "stay":
                 setMonsterLocation(monsterPosX, monsterPosY);
                 break;
-                case "other":
-                System.out.println("movement goes to other");
 
             }
         }
@@ -77,7 +75,6 @@ public class Monster extends Unit {
     // If the monster starts to move or not
     private boolean distCheck (Player player) {
         if (distWithPlayer(this.monsterPosX, this.monsterPosY, player.getPlayerPosX(), player.getPlayerPosY()) <= 4) {
-            System.out.println("distCheck activate");
             return true;
         }
         
@@ -93,20 +90,17 @@ public class Monster extends Unit {
     // determine which way to move
     private String moveLogic (Map map, Player player) {
         
-        System.out.println("moveLogic activate");
         // Determine relative location
         // Player on monster's left hand side
         if (monsterPosX - player.getPlayerPosX() > 0) {
             // Check if future movement is traversable
             if (map.canTraverse(monsterPosX, monsterPosY, "left")) {
-                System.out.println("a returned");
                 return "a";
             }
         // Player on monster's right hand side
         } else if (monsterPosX - player.getPlayerPosX() < 0) {
             // Check if future movement is traversable
             if (map.canTraverse(monsterPosX, monsterPosY, "right")) {
-                System.out.println("d returned");
                 return "d";
             }
         }
@@ -115,18 +109,15 @@ public class Monster extends Unit {
         if (monsterPosY - player.getPlayerPosY() > 0) {
             // Check if future movement is traversable
             if (map.canTraverse(monsterPosX, monsterPosY, "up")) {
-                System.out.println("w returned");
                 return "w";
             }
         // Player under monster
         } else if (monsterPosY - player.getPlayerPosY() < 0) {
             // Check if future movement is traversable
             if (map.canTraverse(monsterPosX, monsterPosY, "down")) {
-                System.out.println("s returned");
                 return "s";
             }
         } else {
-            System.out.println("stay returned");
             return "stay";
         }
         return "other";

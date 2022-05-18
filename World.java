@@ -89,6 +89,11 @@ import java.util.ArrayList;
                 map.fileMapping();
                 prompt();
 
+                // Monster move, even player's input is invalid
+                for (Monster monster : monsterList) {
+                    monster.movement(map, playerList.get(0));
+                }
+
                 // Validating input directions and player won't be out of boundary after moving
                 String direction = inputForMap (movement);
                 if (validateDirection (direction)) {continue;}
@@ -98,11 +103,6 @@ import java.util.ArrayList;
                 if (direction == "home") {
                     home (isEnd);
                     break;
-                }
-
-                // Monster move
-                for (Monster monster : monsterList) {
-                    monster.movement(map, playerList.get(0));
                 }
 
                 // Player move
