@@ -28,6 +28,9 @@ public class WarpStone extends Item {
 
     }
 
+    public void afterEncounter () {}
+
+
     // Set Item location
     public void setItemLocation (int x, int y) {
         this.warpStonePosX = x;

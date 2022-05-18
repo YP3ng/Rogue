@@ -102,6 +102,8 @@ public class Map implements Traversable {
     public ArrayList<Player> getPlayerList () {return this.playerList;}
     // Monsterlist getter
     public ArrayList<Monster> getMonsterList () {return this.monsterList;}
+    // Monsterlist remover
+    public void removeMonster (Monster monster) {this.monsterList.remove(monster);}
     // Itemlist getter
     public ArrayList<Item> getItemList () {return this.itemList;}
 

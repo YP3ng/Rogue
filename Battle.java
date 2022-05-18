@@ -20,7 +20,7 @@ public class Battle {
     // Dummy constructor
     public Battle () {}
     
-    public void battleLoop(Commands commands) {
+    public String battleLoop(Commands commands) {
 
         // Battle starts
         System.out.printf("%s encountered a %s!\n\n", player.getName(), monster.getName());
@@ -40,7 +40,7 @@ public class Battle {
             if(this.isLost(monster.getCurHealth())) {
                 System.out.printf("%s wins!\n\n", player.getName());
                 isEnd = true;
-                continue;
+                return "player";
             };
 
             // Monster starts the attack
@@ -52,10 +52,10 @@ public class Battle {
             if(this.isLost(player.getCurHealth())) {
                 System.out.printf("%s wins!\n\n", monster.getName());
                 isEnd = true;
-                continue;
+                return "monster";
             }
-            
         }
+        return null;
     }
 
     private void attack(String player, int damage, String monster) {

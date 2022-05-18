@@ -114,9 +114,19 @@ import java.util.ArrayList;
                 for (Monster mon : monsterList) {
                     if (encounterCheck(playerList.get(0), mon)) {
                         Battle battle = new Battle(playerList.get(0), mon);
-                        battle.battleLoop(commands);
                         // if player wins, continue. Lost monster removed
                         // if player lose, return to menu
+                        String result = battle.battleLoop(commands);
+                        if (result == "monster") {
+                            home(isEnd);
+                            break;
+                        }
+
+                        if (result == "player") {
+                            this.monsterList.remove(mon);
+                            map.removeMonster(mon);
+                        }
+                        
                     };
                 }
 

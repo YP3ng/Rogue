@@ -24,6 +24,7 @@ public class DamagePerk extends Item {
         System.out.println("Attack up!");
         player.setDamage(player.getLevel());
     }
+    public void afterEncounter () {}
 
     // Set Item location
     public void setItemLocation (int x, int y) {

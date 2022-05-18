@@ -22,6 +22,9 @@ public class HealingItem extends Item {
         player.setCurHealth(player.getMaxHealth());
     }
 
+    public void afterEncounter () {}
+
+
     // Set Item location
     public void setItemLocation (int x, int y) {
         this.healItemPosX = x;
