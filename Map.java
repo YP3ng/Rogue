@@ -106,6 +106,9 @@ public class Map implements Traversable {
     public void removeMonster (Monster monster) {this.monsterList.remove(monster);}
     // Itemlist getter
     public ArrayList<Item> getItemList () {return this.itemList;}
+    // Itemlist remover
+    public void removeItem (Item item) {this.itemList.remove(item);}
+
 
     // Update entities' location and then print out, row by row
     public void fileMapping () {

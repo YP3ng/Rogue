@@ -10,8 +10,7 @@ public abstract class Item extends Entity {
         super(name);
     }
 
-    public abstract void effect(Player player);
-    public abstract void afterEncounter();
+    public abstract String effect(Player player);
     // Set Item location
     public abstract void setItemLocation (int x, int y);
     // Get Item location

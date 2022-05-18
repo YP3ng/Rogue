@@ -123,8 +123,8 @@ import java.util.ArrayList;
                         }
 
                         if (result == "player") {
-                            this.monsterList.remove(mon);
                             map.removeMonster(mon);
+                            this.monsterList.remove(mon);
                         }
                         
                     };
@@ -133,8 +133,14 @@ import java.util.ArrayList;
                 // Check if items need to be picked
                 for (Item ite :itemList) {
                     if(itemPickCheck(playerList.get(0), ite)) {
-                        ite.effect(playerList.get(0));
-                        
+                        String afterEffect = ite.effect(playerList.get(0));
+                        map.removeItem(ite);
+                        this.itemList.remove(ite);
+                        if (afterEffect == "warp") {
+                            home(isEnd);
+                            break;
+                        }
+
                     }
                 }
             }

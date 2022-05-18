@@ -19,16 +19,16 @@ public class WarpStone extends Item {
      * Return back to the main menu
      */
     @Override
-    public void effect(Player player) {
+    public String effect(Player player) {
         
         System.out.println("World complete! (You leveled up!)");
         player.setLevel(player.getLevel() + 1);
        
         //return to main menu
+        return "warp";
 
     }
 
-    public void afterEncounter () {}
 
 
     // Set Item location

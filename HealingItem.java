@@ -16,13 +16,14 @@ public class HealingItem extends Item {
 
     // Health player's health to full
     @Override
-    public void effect(Player player) {
+    public String effect(Player player) {
 
         System.out.println("Healed!");
         player.setCurHealth(player.getMaxHealth());
+
+        return "heal";
     }
 
-    public void afterEncounter () {}
 
 
     // Set Item location
