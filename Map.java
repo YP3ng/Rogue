@@ -31,6 +31,7 @@ public class Map implements Traversable {
         this.mapRows = new ArrayList<StringBuilder>(mapHeight);
         this.playerList = new ArrayList<Player> ();
         this.monsterList = new ArrayList<Monster>();
+        this.itemList = new ArrayList<Item>();
     }
 
     // for default map 
@@ -244,6 +245,14 @@ public class Map implements Traversable {
             }
 
         }
+    }
+
+    // Reset old position to "."
+    public void resetMapRows (int index, int row) {
+
+        StringBuilder selectRow = mapRows.get(row);
+        selectRow.setCharAt(index, '.');
+        mapRows.set(index, selectRow);
     }
 
 }

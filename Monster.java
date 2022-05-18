@@ -5,7 +5,6 @@
  */
 public class Monster extends Unit {
     // All of the variables are from user inputs
-    private String name;
     private int maxHealth;
     private int damage;
     private int curHealth;
@@ -50,15 +49,19 @@ public class Monster extends Unit {
         if (distCheck(playerPosX, playerPosY)) {
             switch (moveLogic(map)) {
                 case "w":
+                map.resetMapRows(monsterPosX, monsterPosY);
                 setMonsterLocation(monsterPosX, monsterPosY -1);
                 break;
                 case "a":
+                map.resetMapRows(monsterPosX, monsterPosY);
                 setMonsterLocation(monsterPosX - 1, monsterPosY);
                 break;
                 case "s":
+                map.resetMapRows(monsterPosX, monsterPosY);
                 setMonsterLocation(monsterPosX, monsterPosY + 1);
                 break;
                 case "d":
+                map.resetMapRows(monsterPosX, monsterPosY);
                 setMonsterLocation(monsterPosX + 1, monsterPosY);
                 break;
                 case "stay":

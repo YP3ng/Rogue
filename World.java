@@ -92,7 +92,7 @@ import java.util.ArrayList;
                 // Validating input directions and player won't be out of boundary after moving
                 String direction = inputForMap (movement);
                 if (validateDirection (direction)) {continue;}
-                if (validateMove (direction)) {continue;}
+                if (filevalidateMove (direction)) {continue;}
 
                 // If home is typed, return to menu
                 if (direction == "home") {
@@ -173,6 +173,26 @@ import java.util.ArrayList;
                 break;
             case "d":
                 if (this.player.getPlayerPosX() + 1 > map.getWidth() - 1) {return true;}
+                break;
+            case "home": break;
+        }
+        return false;
+    }
+
+    // Check if player is still inside the custimized map after moving
+    private boolean filevalidateMove (String input) {
+        switch (input) {
+            case "w":
+                if (playerList.get(0).getPlayerPosY() - 1 < 0) {return true;}
+                break;
+            case "a":
+                if (playerList.get(0).getPlayerPosX() - 1 < 0) {return true;}
+                break;
+            case "s":
+                if (playerList.get(0).getPlayerPosY() + 1 > map.getHeight() - 1) {return true;}
+                break;
+            case "d":
+                if (playerList.get(0).getPlayerPosX() + 1 > map.getWidth() - 1) {return true;}
                 break;
             case "home": break;
         }
