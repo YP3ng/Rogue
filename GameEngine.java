@@ -129,7 +129,8 @@ public class GameEngine {
 
 	// Checking input length
 	private String checkFile (String input) {
-		if (input.length() == 2) {
+		String [] commandArgs = input.split (" ");
+		if (commandArgs.length == 2) {
 			return inputFileName(input);
 		} else {
 			return null;
