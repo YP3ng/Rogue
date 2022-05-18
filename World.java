@@ -117,6 +117,20 @@ import java.util.ArrayList;
                     };
                 }
 
+                // Check if items need to be picked
+                for (Item ite :itemList) {
+                    if(itemPickCheck(playerList.get(0), ite)) {
+                        String afterEffect = ite.effect(playerList.get(0));
+                        this.toRemove(ite);
+                        if (afterEffect == "warp") {
+                            isEnd = home();
+                            playerList.get(0).resetPerk();
+                            break;
+                        }
+
+                    }
+                }
+
 
                 // Validating input directions and player won't be out of boundary after moving
                 String direction = inputForMap (movement);
@@ -135,36 +149,6 @@ import java.util.ArrayList;
                     player.movement(direction, map);
                 }
                 
-                // Battle occurs before pick up item
-                // for (Monster mon : monsterList) {
-                //     if (encounterCheck(playerList.get(0), mon)) {
-                //         Battle battle = new Battle(playerList.get(0), mon);
-                //         // if player wins, continue. Lost monster removed
-                //         // if player lose, return to menu
-                //         String result = battle.battleLoop(commands, "file");
-                //         if (result == "monster") {
-                //             isEnd = home();
-                //             break;
-                //         } else {
-                //             this.toRemove(mon);
-                //         }
-                        
-                //     };
-                // }
-
-                // Check if items need to be picked
-                for (Item ite :itemList) {
-                    if(itemPickCheck(playerList.get(0), ite)) {
-                        String afterEffect = ite.effect(playerList.get(0));
-                        this.toRemove(ite);
-                        if (afterEffect == "warp") {
-                            isEnd = home();
-                            playerList.get(0).resetPerk();
-                            break;
-                        }
-
-                    }
-                }
             }
         }
     }
