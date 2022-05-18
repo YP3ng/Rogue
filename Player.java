@@ -8,6 +8,7 @@ public class Player extends Unit {
     private int level;
     private int curHealth;
     private int curDamage;
+    private int perkCount;
     // protected int playerPosX;
     // protected int playerPosY;
 
@@ -16,19 +17,21 @@ public class Player extends Unit {
         super(name);
         this.level = 1;
         this.curHealth = this.maxHealth (level);
+        this.perkCount = 0;
     }
 
     public Player () {
         this.level = 1;
         this.curHealth = this.maxHealth (level);
         this.setPlayerLocation(1, 1);
+        this.perkCount = 0;
     }
 
     // Display player's information
     @Override
     public void displayInfo (String name) {
         System.out.print (name + " (Lv. " + level + ")\n");
-        System.out.print ("Damage: " + this.getDamage("default") +"\n");
+        System.out.print ("Damage: " + this.getOrgDamgage() +"\n");
         System.out.print ("Health: " + this.getCurHealth() + "/" + this.getMaxHealth() + "\n\n");
     }
 
@@ -109,19 +112,24 @@ public class Player extends Unit {
     // MaxHealth getter
     public int getMaxHealth () {return this.maxHealth (this.level);}
 
-    // Attack damage getter, based on controler (default or file)
-    public int getDamage (String control) {
-        if (control == "default") {
-            return this.attackDamage (this.level);
-        } else {
-            return this.curDamage;
-        }
+    // Attack curDamage getter
+    public int getCurDamage () {
+        return this.curDamage;
+    }
+
+    // Attack Damage getter, only based on level
+    public int getOrgDamgage () {
+        return this.attackDamage(this.getLevel());
     }
 
     // Damage setter for damagePerk
-    public void setDamage (int level) {
-        this.curDamage = attackDamage(level) + 1;
+    public void setCurDamage (int level) {
+        this.curDamage = attackDamage(level) + this.perkCount;
+        this.perkCount += 1;
     }
+
+    // Reset perkCount
+    public void resetPerk () {this.perkCount = 0;}
 
     // Set player location after user's input
     public void setPlayerLocation (int x, int y) {

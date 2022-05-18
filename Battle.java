@@ -32,9 +32,9 @@ public class Battle {
             commands.displayPlayerMonster(commands.returnP(player), commands.returnM(monster));
 
             // Player starts the attack
-            this.attack(player.getName(), player.getDamage(control), monster.getName());
+            this.attack(player.getName(), player.getCurDamage(), monster.getName());
             // Update monster health
-            monster.setCurHealth(monster.getCurHealth() - player.getDamage(control));
+            monster.setCurHealth(monster.getCurHealth() - player.getCurDamage());
 
             // If player wins
             if(this.isLost(monster.getCurHealth())) {

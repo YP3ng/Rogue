@@ -108,6 +108,7 @@ import java.util.ArrayList;
                         // if player lose, return to menu
                         String result = battle.battleLoop(commands, "file");
                         if (result == "monster") {
+                            playerList.get(0).resetPerk();
                             isEnd = home();
                             break;
                         } else {
@@ -126,6 +127,7 @@ import java.util.ArrayList;
                 // If home is typed, return to menu
                 if (direction == "home") {
                     isEnd = home();
+                    playerList.get(0).resetPerk();
                     break;
                 }
 
@@ -158,6 +160,7 @@ import java.util.ArrayList;
                         this.toRemove(ite);
                         if (afterEffect == "warp") {
                             isEnd = home();
+                            playerList.get(0).resetPerk();
                             break;
                         }
 
