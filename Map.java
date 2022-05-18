@@ -29,9 +29,9 @@ public class Map implements Traversable {
         this.setHeight(Height);
         this.setWidth(Width);
         this.mapRows = new ArrayList<StringBuilder>(mapHeight);
-        this.playerList = new ArrayList<Player> ();
-        this.monsterList = new ArrayList<Monster>();
-        this.itemList = new ArrayList<Item>();
+        this.playerList = new ArrayList<Player> (1);
+        this.monsterList = new ArrayList<Monster>(4);
+        this.itemList = new ArrayList<Item>(3);
     }
 
     // for default map 
@@ -47,8 +47,9 @@ public class Map implements Traversable {
     public boolean canTraverse(int x, int y, String direction) {
 
         char type = extracTerrain(x, y, direction);
-        if (type == '.') {return true;}
-        return false;
+        if (type == '#') {return false;}
+        if (type == '~') {return false;}
+        return true;
 
     }
 
@@ -124,13 +125,9 @@ public class Map implements Traversable {
         for (StringBuilder row : mapRows) {
 
             // Check item location and update if needed
-            this.updateItemRow(index, row);
-            // Check monster location
-            this.updateMonsterRow(index, row);
-            // Check player location 
-            this.updatePlayerRow(index, row);   
+            StringBuilder selectRow = this.updateRow(index, row);
 
-            System.out.println(row);
+            System.out.println(selectRow);
             index += 1;
         }
         System.out.println();
@@ -206,53 +203,41 @@ public class Map implements Traversable {
     }
 
     // Update mapRows based on item location
-    private void updateItemRow (int index, StringBuilder row) {
-
+    private StringBuilder updateRow (int index, StringBuilder row) {
+        
         // loop through item list
         for (Item item : itemList) {
+
             // Update row if item on that line
             if (index == item.getItemPosY()) {
                 row.setCharAt(item.getItemPosX(), item.getItemName());
-                mapRows.set(index, row);
             }
-
         }
-    }
-
-    // Update mapRows based on monster location
-    private void updateMonsterRow (int index, StringBuilder row) {
-
         // loop through monster list
         for (Monster monster : monsterList) {
             // Update row if monster on that line
             if (index == monster.getMonsterPosY()) {
                 row.setCharAt(monster.getMonsterPosX(), monster.getNameChar());
-                mapRows.set(index, row);
             }
-
         }
-    }
-
-    // Update mapRows based on player location
-    private void updatePlayerRow (int index, StringBuilder row) {
-
         // loop through player list
         for (Player player : playerList) {
             // Update row if player on that line
             if (index == player.getPlayerPosY()) {
                 row.setCharAt(player.getPlayerPosX(), player.getNameChar());
-                mapRows.set(index, row);
             }
-
         }
+
+        return row;
     }
 
-    // Reset old position to "."
-    public void resetMapRows (int index, int row) {
+    // Reset player's previous location
+    public void resetRow (int x, int y) {
 
-        StringBuilder selectRow = mapRows.get(row);
-        selectRow.setCharAt(index, '.');
-        mapRows.set(index, selectRow);
+            StringBuilder selectRow = mapRows.get(y);
+            selectRow.setCharAt(x, '.');
+            mapRows.set(y, selectRow);
+        
     }
 
 }

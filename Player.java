@@ -58,28 +58,28 @@ public class Player extends Unit {
             case "w":
                 // Check if future movement is traversable
                 if (map.canTraverse(playerPosX, playerPosY, "up")) {
-                    map.resetMapRows(playerPosX, playerPosY);
+                    map.resetRow(playerPosX, playerPosY);
                     setPlayerLocation (playerPosX, playerPosY - 1);
                 }
                 break;
             case "a":
                 // Check if future movement is traversable
                 if (map.canTraverse(playerPosX, playerPosY, "left")) {
-                    map.resetMapRows(playerPosX, playerPosY);
+                    map.resetRow(playerPosX, playerPosY);
                     setPlayerLocation (playerPosX - 1, playerPosY);
                 }
                 break;
             case "s":
                 // Check if future movement is traversable
                 if (map.canTraverse(playerPosX, playerPosY, "down")) {
-                    map.resetMapRows(playerPosX, playerPosY);
+                    map.resetRow(playerPosX, playerPosY);
                     setPlayerLocation (playerPosX, playerPosY + 1);
                 }
                 break;
             case "d":
                 // Check if future movement is traversable
                 if (map.canTraverse(playerPosX, playerPosY, "right")) {
-                    map.resetMapRows(playerPosX, playerPosY);
+                    map.resetRow(playerPosX, playerPosY);
                     setPlayerLocation (playerPosX + 1, playerPosY);
                 }
                 break;
