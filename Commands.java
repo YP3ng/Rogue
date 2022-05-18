@@ -95,8 +95,8 @@ public class Commands {
     // Start the game
     // Should allow file input
     public void start (
-        World world, Player player, Monster monster, 
-        Scanner scan, Battle battle, Commands commands,
+        Player player, Monster monster, 
+        Scanner scan, Commands commands,
         String fileName
         ) {
         // Check if player is set up
@@ -142,14 +142,20 @@ public class Commands {
                     charClassifier(line, fileMap, player);
 
                 }
+
+                World world = new World(fileMap);
+                world.gameWorld(scan, commands, "file");
+    
             }
-            world.gameWorld(scan, commands, "file");
             
-        } else { // No file input, set a default map
-            Map defaultMap = new Map();
+        } else {
+            // No file input, set a default map
+            Map defaultMap = new Map(player, monster);
+            World world = new World(player, monster, defaultMap);
+            world.gameWorld (scan,commands, "default"); // Game world with no input file
         }
 
-        world.gameWorld (scan,commands, "default"); // Game world with no input file
+        
     }
 
     public void save () {};

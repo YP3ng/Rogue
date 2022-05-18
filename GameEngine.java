@@ -30,8 +30,6 @@ public class GameEngine {
 		Player player = new Player ();
 		Monster monster = new Monster ();
 		Commands commands = new Commands ();
-		World world = new World ();
-		Battle battle = new Battle ();
 		
 		// Call menu
 		menu (player, monster, commands);
@@ -82,7 +80,7 @@ public class GameEngine {
                     break;
                 case "start":
 					String fileName = checkFile(input);
-					commands.start (world, player, monster, scan, battle, commands, fileName);
+					commands.start (player, monster, scan, commands, fileName);
 					if (commands.returnToMenu (scan)) {
 						menu (player, monster, commands);
 						continue;

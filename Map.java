@@ -15,8 +15,8 @@ public class Map implements Traversable {
 	public static final int DEFAULT_MAP_HEIGHT = 4;
 	public static final int DEFAULT_MONSTER_X = 4;
 	public static final int DEFAULT_MONSTER_Y = 2;
-    public static final int DEFAULT_PLAYER_X = 2;
-    public static final int DEFAULT_PLAYER_Y = 2;
+    public static final int DEFAULT_PLAYER_X = 1;
+    public static final int DEFAULT_PLAYER_Y = 1;
     private int mapWidth; 
 	private int mapHeight;
     private ArrayList<StringBuilder> mapRows;
@@ -32,9 +32,11 @@ public class Map implements Traversable {
     }
 
     // for default map 
-    public Map() {
+    public Map(Player player, Monster monster) {
         this.mapWidth = DEFAULT_MAP_WIDTH;
         this.mapHeight = DEFAULT_MAP_HEIGHT;
+        player.setPlayerLocation(DEFAULT_PLAYER_X, DEFAULT_PLAYER_Y);
+        monster.setMonsterLocation(DEFAULT_MONSTER_X, DEFAULT_MONSTER_Y);
     }
 
     @Override
