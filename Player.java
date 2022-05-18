@@ -18,6 +18,7 @@ public class Player extends Unit {
         this.level = 1;
         this.curHealth = this.maxHealth (level);
         this.perkCount = 0;
+        this.curDamage = this.getCurDamage();
     }
 
     public Player () {
@@ -114,7 +115,7 @@ public class Player extends Unit {
 
     // Attack curDamage getter
     public int getCurDamage () {
-        return this.curDamage;
+        return this.attackDamage(this.getLevel()) + perkCount;
     }
 
     // Attack Damage getter, only based on level
@@ -122,9 +123,8 @@ public class Player extends Unit {
         return this.attackDamage(this.getLevel());
     }
 
-    // Damage setter for damagePerk
-    public void setCurDamage (int level) {
-        this.curDamage = attackDamage(level) + this.perkCount;
+    // Increase perkCount
+    public void setPerk () {
         this.perkCount += 1;
     }
 

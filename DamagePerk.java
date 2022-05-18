@@ -22,7 +22,7 @@ public class DamagePerk extends Item {
     public String effect(Player player) {
 
         System.out.println("Attack up!");
-        player.setCurDamage(player.getLevel());
+        player.setPerk();
 
         return "damage";
     }

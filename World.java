@@ -47,7 +47,6 @@ import java.util.ArrayList;
     // Dummy constructor
     public World () {}
 
-    // TODO: need to add filemapping process
     public void gameWorld (Scanner movement, Commands commands, String fileOrDefault) {
         
         // Start the advanture
