@@ -157,15 +157,15 @@ public class Map implements Traversable {
     // Gather player location from file input
     public void gatherPlayerLoc (String line, Player player) {
 
-        String[] playerData = this.extractFileData(line, 2);
-        player.setPlayerLocation(Integer.parseInt(playerData[0]), Integer.parseInt(playerData[1]));
+        String[] playerData = this.extractFileData(line, 3);
+        player.setPlayerLocation(Integer.parseInt(playerData[1]), Integer.parseInt(playerData[2]));
         playerList.add(player);
     }
 
     // Gather monster Information and create a new monster
     public void makeNewMonster (String line) {
 
-        String[] monsterData = this.extractFileData(line, 4);
+        String[] monsterData = this.extractFileData(line, 6);
         Monster monster = new Monster(monsterData);
         monsterList.add(monster);
         
@@ -174,9 +174,9 @@ public class Map implements Traversable {
     // Gather Item Information and create new item
     public void makeNewItem (String line) {
 
-        String[] itemData = extractFileData(line, 3);
+        String[] itemData = extractFileData(line, 4);
 
-        switch (itemData[2]) {
+        switch (itemData[3]) {
             case "+":
                 HealingItem healItem = new HealingItem("+", itemData);
                 itemList.add(healItem);
@@ -196,12 +196,8 @@ public class Map implements Traversable {
 
         String[] infoSet = new String[size];
         String[] sepLine = line.split(" ");
-        int loopIndex = 0;
-        for (String ele : sepLine) {
-
-            if (loopIndex == 0) {continue;} // Don't need first word
-            infoSet[loopIndex] = ele;
-            loopIndex += 1;
+        for (int i = 0; i < sepLine.length; i++) {
+            infoSet[i] = sepLine[i];
         }
         return infoSet;
     }

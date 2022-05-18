@@ -138,7 +138,7 @@ public class Commands {
                 // Extracting other information
                 while (gameFileRead.hasNextLine()) {
                     String line = gameFileRead.nextLine();
-                    charClassifier(line, fileMap, player);
+                    this.charClassifier(line, fileMap, player);
 
                 }
 

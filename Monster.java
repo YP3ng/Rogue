@@ -18,11 +18,11 @@ public class Monster extends Unit {
     }
 
     public Monster (String[] infoSet) {
-        super(infoSet[2]);
-        this.setMaxHealth(Integer.parseInt(infoSet[3]));
+        super(infoSet[3]);
+        this.setMaxHealth(Integer.parseInt(infoSet[4]));
         this.setCurHealth(getMaxHealth());
-        this.setDamage(Integer.parseInt(infoSet[4]));
-        this.setMonsterLocation(Integer.parseInt(infoSet[0]), Integer.parseInt(infoSet[1]));
+        this.setDamage(Integer.parseInt(infoSet[5]));
+        this.setMonsterLocation(Integer.parseInt(infoSet[1]), Integer.parseInt(infoSet[2]));
     }
 
     // Default
