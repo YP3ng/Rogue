@@ -11,7 +11,7 @@ public class DamagePerk extends Item {
     // Constructor
     public DamagePerk(String name, String[] itemData) {
         super(name);
-        setItemLocation(Integer.parseInt(itemData[0]), Integer.parseInt(itemData[1]));
+        setItemLocation(Integer.parseInt(itemData[1]), Integer.parseInt(itemData[2]));
     }
 
     /**

@@ -11,7 +11,7 @@ public class HealingItem extends Item {
     // Constructor
     public HealingItem(String name, String[] itemData) {
         super(name);
-        setItemLocation(Integer.parseInt(itemData[0]), Integer.parseInt(itemData[1]));
+        setItemLocation(Integer.parseInt(itemData[1]), Integer.parseInt(itemData[2]));
     }
 
     // Health player's health to full

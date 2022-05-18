@@ -11,7 +11,7 @@ public class WarpStone extends Item {
     // Constructor
     public WarpStone(String name, String[] itemData) {
         super(name);
-        setItemLocation(Integer.parseInt(itemData[0]), Integer.parseInt(itemData[1]));
+        setItemLocation(Integer.parseInt(itemData[1]), Integer.parseInt(itemData[2]));
     }
 
     /**
