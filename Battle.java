@@ -20,7 +20,7 @@ public class Battle {
     // Dummy constructor
     public Battle () {}
     
-    public String battleLoop(Commands commands) {
+    public String battleLoop(Commands commands, String control) {
 
         // Battle starts
         System.out.printf("%s encountered a %s!\n\n", player.getName(), monster.getName());
@@ -32,9 +32,9 @@ public class Battle {
             commands.displayPlayerMonster(commands.returnP(player), commands.returnM(monster));
 
             // Player starts the attack
-            this.attack(player.getName(), player.getDamage(), monster.getName());
+            this.attack(player.getName(), player.getDamage(control), monster.getName());
             // Update monster health
-            monster.setCurHealth(monster.getCurHealth() - player.getDamage());
+            monster.setCurHealth(monster.getCurHealth() - player.getDamage(control));
 
             // If player wins
             if(this.isLost(monster.getCurHealth())) {

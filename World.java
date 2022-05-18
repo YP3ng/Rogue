@@ -77,7 +77,7 @@ import java.util.ArrayList;
                 // Check if player meets monster
                 if (encounterCheck (player, monster)) {
                     Battle defaultBattle = new Battle(player, monster);
-                    defaultBattle.battleLoop(commands);
+                    defaultBattle.battleLoop(commands, "default");
 
                 }
             }
@@ -85,6 +85,15 @@ import java.util.ArrayList;
         } else if (fileOrDefault == "file") {
 
             while (!isEnd) {
+
+                // Removed lost monster or picked items
+                map.removeEntity(this.toRemove);
+                // Clear temporate list
+                toRemove.clear();
+                // Update monster and item lists
+                this.monsterList = map.getMonsterList();
+                this.itemList = map.getItemList();
+                
 
                 // Print out file input map
                 map.fileMapping();
@@ -97,7 +106,7 @@ import java.util.ArrayList;
                         Battle battle = new Battle(playerList.get(0), monster);
                         // if player wins, continue. Lost monster removed
                         // if player lose, return to menu
-                        String result = battle.battleLoop(commands);
+                        String result = battle.battleLoop(commands, "file");
                         if (result == "monster") {
                             isEnd = home();
                             break;
@@ -107,6 +116,7 @@ import java.util.ArrayList;
                         
                     };
                 }
+
 
                 // Validating input directions and player won't be out of boundary after moving
                 String direction = inputForMap (movement);
@@ -125,21 +135,21 @@ import java.util.ArrayList;
                 }
                 
                 // Battle occurs before pick up item
-                for (Monster mon : monsterList) {
-                    if (encounterCheck(playerList.get(0), mon)) {
-                        Battle battle = new Battle(playerList.get(0), mon);
-                        // if player wins, continue. Lost monster removed
-                        // if player lose, return to menu
-                        String result = battle.battleLoop(commands);
-                        if (result == "monster") {
-                            isEnd = home();
-                            break;
-                        } else {
-                            this.toRemove(mon);
-                        }
+                // for (Monster mon : monsterList) {
+                //     if (encounterCheck(playerList.get(0), mon)) {
+                //         Battle battle = new Battle(playerList.get(0), mon);
+                //         // if player wins, continue. Lost monster removed
+                //         // if player lose, return to menu
+                //         String result = battle.battleLoop(commands, "file");
+                //         if (result == "monster") {
+                //             isEnd = home();
+                //             break;
+                //         } else {
+                //             this.toRemove(mon);
+                //         }
                         
-                    };
-                }
+                //     };
+                // }
 
                 // Check if items need to be picked
                 for (Item ite :itemList) {
@@ -153,13 +163,6 @@ import java.util.ArrayList;
 
                     }
                 }
-                // Removed lost monster or picked items
-                map.removeEntity(this.toRemove);
-                // Clear temporate list
-                toRemove.clear();
-                // Update monster and item lists
-                this.monsterList = map.getMonsterList();
-                this.itemList = map.getItemList();
             }
         }
     }

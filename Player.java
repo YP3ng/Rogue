@@ -28,7 +28,7 @@ public class Player extends Unit {
     @Override
     public void displayInfo (String name) {
         System.out.print (name + " (Lv. " + level + ")\n");
-        System.out.print ("Damage: " + this.getDamage() +"\n");
+        System.out.print ("Damage: " + this.getDamage("default") +"\n");
         System.out.print ("Health: " + this.getCurHealth() + "/" + this.getMaxHealth() + "\n\n");
     }
 
@@ -109,12 +109,19 @@ public class Player extends Unit {
     // MaxHealth getter
     public int getMaxHealth () {return this.maxHealth (this.level);}
 
-    // Attack damage getter, based on level only
-    public int getDamage () {return this.attackDamage (this.level);}
-    // Attack damage getter, based on level and damage perks
-    public int getPerkDamage () {return this.curDamage;}
+    // Attack damage getter, based on controler (default or file)
+    public int getDamage (String control) {
+        if (control == "default") {
+            return this.attackDamage (this.level);
+        } else {
+            return this.curDamage;
+        }
+    }
+
     // Damage setter for damagePerk
-    public void setDamage (int level) {this.curDamage = attackDamage(level) + 1;}
+    public void setDamage (int level) {
+        this.curDamage = attackDamage(level) + 1;
+    }
 
     // Set player location after user's input
     public void setPlayerLocation (int x, int y) {
