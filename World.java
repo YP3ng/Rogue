@@ -67,7 +67,7 @@ import java.util.ArrayList;
 
                 // If home is typed, return to menu
                 if (direction == "home") {
-                    home (isEnd);
+                    isEnd = home();
                     break;
                 }
                 
@@ -93,6 +93,19 @@ import java.util.ArrayList;
                 // Monster move, even player's input is invalid
                 for (Monster monster : monsterList) {
                     monster.movement(map, playerList.get(0));
+                    if (encounterCheck(playerList.get(0), monster)) {
+                        Battle battle = new Battle(playerList.get(0), monster);
+                        // if player wins, continue. Lost monster removed
+                        // if player lose, return to menu
+                        String result = battle.battleLoop(commands);
+                        if (result == "monster") {
+                            isEnd = home();
+                            break;
+                        } else {
+                            this.toRemove(monster);
+                        }
+                        
+                    };
                 }
 
                 // Validating input directions and player won't be out of boundary after moving
@@ -102,7 +115,7 @@ import java.util.ArrayList;
 
                 // If home is typed, return to menu
                 if (direction == "home") {
-                    home (isEnd);
+                    isEnd = home();
                     break;
                 }
 
@@ -119,7 +132,7 @@ import java.util.ArrayList;
                         // if player lose, return to menu
                         String result = battle.battleLoop(commands);
                         if (result == "monster") {
-                            home(isEnd);
+                            isEnd = home();
                             break;
                         } else {
                             this.toRemove(mon);
@@ -134,7 +147,7 @@ import java.util.ArrayList;
                         String afterEffect = ite.effect(playerList.get(0));
                         this.toRemove(ite);
                         if (afterEffect == "warp") {
-                            home(isEnd);
+                            isEnd = home();
                             break;
                         }
 
@@ -217,9 +230,9 @@ import java.util.ArrayList;
     }
     
     // Method for users to break loop
-    private boolean home (boolean isEnd) {
+    private boolean home () {
         System.out.println ("Returning home...\n");
-        return isEnd = true;
+        return true;
     }
 
     // Item location check
