@@ -108,12 +108,21 @@ public class Map implements Traversable {
     public ArrayList<Player> getPlayerList () {return this.playerList;}
     // Monsterlist getter
     public ArrayList<Monster> getMonsterList () {return this.monsterList;}
-    // Monsterlist remover
-    public void removeMonster (Monster monster) {this.monsterList.remove(monster);}
     // Itemlist getter
     public ArrayList<Item> getItemList () {return this.itemList;}
-    // Itemlist remover
-    public void removeItem (Item item) {this.itemList.remove(item);}
+
+    // Entity remover
+    public void removeEntity (ArrayList<Entity> e) {
+        for (Entity ele : e) {
+
+            if (ele instanceof Monster) {
+                monsterList.remove(ele);
+            } else if (ele instanceof Item) {
+                itemList.remove(ele);
+            }
+        }
+        
+    }
 
 
     // Update entities' location and then print out, row by row

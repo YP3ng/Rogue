@@ -39,7 +39,6 @@ public class Battle {
             // If player wins
             if(this.isLost(monster.getCurHealth())) {
                 System.out.printf("%s wins!\n\n", player.getName());
-                isEnd = true;
                 return "player";
             };
 
@@ -51,7 +50,6 @@ public class Battle {
             // If monster wins
             if(this.isLost(player.getCurHealth())) {
                 System.out.printf("%s wins!\n\n", monster.getName());
-                isEnd = true;
                 return "monster";
             }
         }

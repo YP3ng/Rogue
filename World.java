@@ -26,6 +26,7 @@ import java.util.ArrayList;
     private ArrayList<Player> playerList;
     private ArrayList<Monster> monsterList;
     private ArrayList<Item> itemList;
+    private ArrayList<Entity> toRemove = new ArrayList<Entity>();
     private Map map;
 
     // Default constructor
@@ -120,11 +121,8 @@ import java.util.ArrayList;
                         if (result == "monster") {
                             home(isEnd);
                             break;
-                        }
-
-                        if (result == "player") {
-                            map.removeMonster(mon);
-                            this.monsterList.remove(mon);
+                        } else {
+                            this.toRemove(mon);
                         }
                         
                     };
@@ -134,8 +132,7 @@ import java.util.ArrayList;
                 for (Item ite :itemList) {
                     if(itemPickCheck(playerList.get(0), ite)) {
                         String afterEffect = ite.effect(playerList.get(0));
-                        map.removeItem(ite);
-                        this.itemList.remove(ite);
+                        this.toRemove(ite);
                         if (afterEffect == "warp") {
                             home(isEnd);
                             break;
@@ -143,6 +140,13 @@ import java.util.ArrayList;
 
                     }
                 }
+                // Removed lost monster or picked items
+                map.removeEntity(this.toRemove);
+                // Clear temporate list
+                toRemove.clear();
+                // Update monster and item lists
+                this.monsterList = map.getMonsterList();
+                this.itemList = map.getItemList();
             }
         }
     }
@@ -222,5 +226,11 @@ import java.util.ArrayList;
     private boolean itemPickCheck (Player player, Item item) {
         if (player.getPlayerPosX() == item.getItemPosX() && player.getPlayerPosY() == item.getItemPosY()) {return true;}
         return false;
+    }
+
+    // Temporate list for removal
+    private void toRemove (Entity e) {
+
+        this.toRemove.add(e);
     }
 }
