@@ -13,7 +13,6 @@ public class GameEngine {
 		// This main method is for running the whole program
 		// Creates an instance of the game engine.
 		GameEngine gameEngine = new GameEngine ();
-
 		// Runs the main game loop.
 		gameEngine.runGameLoop ();
 		
@@ -27,12 +26,9 @@ public class GameEngine {
 		
 		// User I/O
 		Scanner scan = new Scanner (System.in);
-		// Initialise the game world, player, monster, commands
-		World world = new World ();
 		Player player = new Player ();
 		Monster monster = new Monster ();
 		Commands commands = new Commands ();
-		Battle battle = new Battle ();
 		
 		// Call menu
 		menu (player, monster, commands);
@@ -44,8 +40,10 @@ public class GameEngine {
 			String input = scan.nextLine ();
 
 			// if users' input is wrong, go back to menu (or just have another prompt()?)
-			if (validateInputText (input)) {continue;};
-			String commandWord = inputForMenu (input);
+			String commandWord = inputForCommand (input);
+			if (validateInputText (commandWord)) {continue;};
+			
+
 
             switch (commandWord) {
                 case "help":
@@ -57,24 +55,23 @@ public class GameEngine {
 					prompt ();
 					break;
                 case "player":
-					if (player.getName () != null) {
-						player.info (
-							player.getName (), 
-							player.getLevel (), 
-							player.getCurHealth (),
-							player.getMaxHealth (), 
-							player.getDamage ()
-						);
+
+					if (player.getName() == null) {
+						// Player creation
+						commands.player(player, scan);
 						if (commands.returnToMenu (scan)) {
 							menu (player, monster, commands);
 							continue;
 						}
 					}
-					commands.player (player, scan);
+
+					// Player created
+					player.displayInfo(player.getName());
 					if (commands.returnToMenu (scan)) {
 						menu (player, monster, commands);
 						continue;
 					}
+
                     break;
                 case "monster":
 					commands.monster (monster, scan);
@@ -84,7 +81,8 @@ public class GameEngine {
 					}
                     break;
                 case "start":
-					commands.start (world, player, monster, scan, battle, commands);
+					String fileName = checkFile(input);
+					commands.start (player, monster, scan, commands, fileName);
 					if (commands.returnToMenu (scan)) {
 						menu (player, monster, commands);
 						continue;
@@ -92,6 +90,14 @@ public class GameEngine {
                     break;
 				case "exit":
 					commands.exitProgram ();
+					break;
+				case "save":
+					commands.save(player);
+					prompt();
+					break;
+				case "load":
+					player = commands.load(player);					
+					prompt();
 					break;
             }
 		}
@@ -104,13 +110,7 @@ public class GameEngine {
 
 	// Validates users' inputs
 	private boolean validateInputText (String input) {
-		String [] commandArgs = input.split (" ");
-		if (commandArgs.length != 1) {
-			System.out.println ("Wrong input size, please only type one word");
-			return true;
-		} else if (!Commands.ALLOWED_COMMANDS.contains (commandArgs[0])) {
-			System.out.println ("Invalid commands name");
-			prompt ();
+		if (!Commands.ALLOWED_COMMANDS.contains (inputForCommand(input))) {
 			return true;
 		}
 		return false;
@@ -118,10 +118,27 @@ public class GameEngine {
 
 
 	// Input cutting for menu
-	private String inputForMenu (String input) {
+	private String inputForCommand (String input) {
 		String [] commandArgs = input.split (" ");
 		String words = commandArgs[0];
 		return words;
+	}
+
+	// Input cutting for loading game file
+	private String inputFileName (String input) {
+		String [] commandArgs = input.split (" ");
+		String fileName = commandArgs[1];
+		return fileName + ".dat";
+	}
+
+	// Checking input length
+	private String checkFile (String input) {
+		String [] commandArgs = input.split (" ");
+		if (commandArgs.length == 2) {
+			return inputFileName(input);
+		} else {
+			return null;
+		}
 	}
 	
 	// Displays the title text.

@@ -6,7 +6,21 @@
  */
 
 public class Battle {
-    public void battleLoop(Player player, Monster monster, Commands commands) {
+
+    private Player player;
+    private Monster monster;
+    
+    // Default battle constructor
+    public Battle (Player player, Monster monster) {
+
+        this.player = player;
+        this.monster = monster;
+    }
+
+    // Dummy constructor
+    public Battle () {}
+    
+    public String battleLoop(Commands commands) {
 
         // Battle starts
         System.out.printf("%s encountered a %s!\n\n", player.getName(), monster.getName());
@@ -15,18 +29,17 @@ public class Battle {
         boolean isEnd = false;
         while(!isEnd) {
             // Display the player and monster's health
-            commands.displayPlayerMonster(commands.returnP(player), commands.returnM(monster));
+            commands.battlePlayerMonster(commands.returnP(player), commands.returnM(monster));
 
             // Player starts the attack
-            this.attack(player.getName(), player.getDamage(), monster.getName());
+            this.attack(player.getName(), player.getCurDamage(), monster.getName());
             // Update monster health
-            monster.setCurHealth(monster.getCurHealth() - player.getDamage());
+            monster.setCurHealth(monster.getCurHealth() - player.getCurDamage());
 
             // If player wins
             if(this.isLost(monster.getCurHealth())) {
                 System.out.printf("%s wins!\n\n", player.getName());
-                isEnd = true;
-                continue;
+                return "player";
             };
 
             // Monster starts the attack
@@ -37,11 +50,11 @@ public class Battle {
             // If monster wins
             if(this.isLost(player.getCurHealth())) {
                 System.out.printf("%s wins!\n\n", monster.getName());
-                isEnd = true;
-                continue;
+                return "monster";
             }
-            
+            System.out.println();
         }
+        return null;
     }
 
     private void attack(String player, int damage, String monster) {

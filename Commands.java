@@ -5,11 +5,18 @@
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296
  *
  */
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.PrintWriter;
 
 public class Commands {
-    public static final Set<String> ALLOWED_COMMANDS = Set.of ("help", "player", "monster", "start", "exit", "commands");
+    
+    public static final Set<String> ALLOWED_COMMANDS = Set.of ("help", "player", "monster", "start", "exit", "commands", "save", "load");
     // Show users what commands are allowed
     public void commands () {
         System.out.println ("help");
@@ -17,6 +24,8 @@ public class Commands {
         System.out.println ("monster");
         System.out.println ("start");
         System.out.println ("exit");
+        System.out.println ("save");
+        System.out.println ("load");
         System.out.println ();
     }
 
@@ -32,13 +41,13 @@ public class Commands {
     public void player (Player player, Scanner scan) {
         System.out.println ("What is your character's name?");
 
-        // Configure player name
+        // FileInputure player name
         String input = scan.nextLine ();
         // Validate input. If invalid, redo the process
         if (validateInputText (input)) {player (player, scan);}
         // Set player name
         if (player.getName() == null) {
-            player.setName (cleanInputText (input));
+            player.setName (cleanInputText (input)[0]);
             System.out.printf ("Player '%s' created.\n\n", player.getName());
         }
 
@@ -51,27 +60,30 @@ public class Commands {
         // Loop for input validation
         boolean isDone = false;
         while (!isDone) {
-            // Configure name
+            // FileInputure name
             System.out.print ("Monster name: ");
             String input = scan.nextLine();
             if (validateInputText (input)) {continue;};
             // Set monster name
-            monster.setName (cleanInputText (input));
+            String[] nameInput = cleanInputText(input);
+            monster.setName (nameInput[0]);
 
-            // Configure health
+            // FileInputure health
             System.out.print ("Monster health: ");
             input = scan.nextLine ();
             if (validateInputInt(input)) {continue;};
             // Set monster health
-            monster.setMaxHealth (cleanInputInt(input));
-            monster.setCurHealth (cleanInputInt(input));
+            String[] healthVal = cleanInputText(input);
+            monster.setMaxHealth (parseStrToInt(healthVal).get(0));
+            monster.setCurHealth (parseStrToInt(healthVal).get(0));
 
-            // Configure damage
+            // FileInputure damage
             System.out.print ("Monster damage: ");
             input = scan.nextLine();
             if (validateInputInt (input)) {continue;}
-            // Set monster name
-            monster.setDamage (cleanInputInt (input));
+            // Set monster damage
+            String[] damageVal = cleanInputText(input);
+            monster.setDamage (parseStrToInt (damageVal).get(0));
 
             if (monster.getName() != null) {
                 System.out.printf ("Monster '%s' created.\n\n", monster.getName ());
@@ -81,20 +93,20 @@ public class Commands {
     }
 
     // Start the game
+    // Should allow file input
     public void start (
-        World world, Player player, Monster monster, 
-        Scanner scan, Battle battle, Commands commands
+        Player player, Monster monster, 
+        Scanner scan, Commands commands,
+        String fileName
         ) {
-        // Check if player and monster are set up
+        // Check if player is set up
         if (player.getName () == null) {
             System.out.println("No player found, please create a player with 'player' first.\n");
             return;
         }
-        if (monster.getName () == null) {
-            System.out.println("No monster found, please create a monster with 'monster' first.\n");
-            return;
-        }
+
         // Heal both the player and monster to full health if a new game is triggered
+        // Not sure if this still hold in A2
         if (
             player.getCurHealth () != player.getMaxHealth () || 
             monster.getCurHealth () != monster.getMaxHealth ()
@@ -102,8 +114,103 @@ public class Commands {
             player.setCurHealth (player.getMaxHealth ());
             monster.setCurHealth (monster.getMaxHealth ());
         }
-        world.gameWorld (world, player, monster, scan, battle, commands);
+
+        
+        // Initialise the file reader
+        if (fileName != null) {
+            Scanner gameFileRead = null;
+
+            try {
+                gameFileRead =gameFileRead(fileName);
+            } catch (GameLevelNotFoundException e) {
+                System.out.println(e.getMessage());
+                System.out.println();
+                return; // TODO:Should return to menu, not exit the program
+            }
+
+            // Extracting the information of the map
+            if (gameFileRead.hasNextLine()) {
+                
+                // Extract map size
+                String mapSize = gameFileRead.nextLine();
+                String [] mapInfo = mapInfo(mapSize);
+                ArrayList<Integer> mapInfoList = parseStrToInt(mapInfo);
+                Map fileMap = new Map(mapInfoList.get(0), mapInfoList.get(1));
+                
+                // Extracting other information
+                while (gameFileRead.hasNextLine()) {
+                    String line = gameFileRead.nextLine();
+                    this.charClassifier(line, fileMap, player);
+
+                }
+
+                World world = new World(fileMap);
+                world.gameWorld(scan, commands, "file");
+    
+            }
+            
+        } else {
+
+            // Check if monster is created
+            if (monster.getName() == null) {
+                System.out.println("No monster found, please create a monster with 'monster' first.\n");
+                return;
+            }
+            // No file input, set a default map
+            Map defaultMap = new Map(player, monster);
+            World world = new World(player, monster, defaultMap);
+            world.gameWorld (scan,commands, "default"); // Game world with no input file
+        }
+
+        
     }
+
+    public void save (Player player) {
+
+        String filename = "player.dat";
+
+        // Create printWriter
+        PrintWriter outStream = newFileOrOverwrite(filename);
+
+        // Check if player exist
+        if (player.getName() == null) {
+            
+            System.out.println("No player data to save.");
+        } else {
+            // Player information
+            String name = player.getName();
+            int level = player.getLevel();
+
+            outStream.println(name + " " + level);
+            outStream.close();
+
+            System.out.println("Player data saved.");
+        }
+        System.out.println();
+
+    };
+    // Loading player name and level
+    public Player load (Player player) {
+
+        String fileName = "player.dat";
+        String[] sepLine = new String[2];
+        // Open reader
+        Scanner inStream = playerFileRead(fileName);
+        if (inStream != null) {
+            while (inStream.hasNextLine()) {
+                sepLine = inStream.nextLine().split(" ");
+            }
+        } else {
+            return player;
+        }
+        // Initialise new player
+        player = new Player(sepLine[0], Integer.parseInt(sepLine[1]));
+
+        System.out.println("Player data loaded.");
+        System.out.println();
+
+        return player;
+    };
 
     // Close the program
     public void exitProgram () {
@@ -145,6 +252,13 @@ public class Commands {
 		System.out.printf ("Monster: %s\n", mInfo);
 	}
 
+    // Concat infomation from both player and monster
+	public void battlePlayerMonster (String pInfo, String mInfo) {
+		System.out.printf ("%s", pInfo);
+		System.out.print (" | ");
+		System.out.printf ("%s\n", mInfo);
+	}
+
     /**
      * The following methods are helpers for commands
      * 
@@ -176,19 +290,97 @@ public class Commands {
 	}
 
 	// Clean input text for further usage
-	private String cleanInputText (String input) {
+	private String[] cleanInputText (String input) {
 		String[] commandArgs = input.split (" ");
-		String word = commandArgs[0];
-		return word;
+		return commandArgs;
 	}
 
-    // Clean input int for further usage
-	private int cleanInputInt (String input) {
-		String[] commandArgs = input.split (" ");
-        int number = Integer.parseInt (commandArgs[0]);
-		return number;
+    // Parse String to Integer
+	private ArrayList<Integer> parseStrToInt (String[] input) {
+        ArrayList<Integer> intList = new ArrayList<Integer> (2);
+        for (String ele : input) {
+            try {
+                int number = Integer.parseInt (ele);
+                intList.add(number);
+            } catch (InputMismatchException err) {
+                return null;
+            }
+        }
+		return intList;
 	}
 
+    // Read game file
+    private Scanner gameFileRead (String fileName) throws GameLevelNotFoundException {
+
+        Scanner gameFileRead = null;
+        try {
+            gameFileRead = new Scanner (new FileInputStream(fileName));
+            return gameFileRead;
+        } catch (FileNotFoundException e) {
+            throw new GameLevelNotFoundException ("Map not found.");
+        }
+    }
+
+    // Read player file
+    private Scanner playerFileRead (String fileName) {
+
+        Scanner playerFileRead = null;
+        try {
+            playerFileRead = new Scanner (new FileInputStream(fileName));
+            return playerFileRead;
+        } catch (FileNotFoundException e) {
+            System.out.println("No player data found.");
+            System.out.println();
+        }
+        return playerFileRead;
+    }
     
+    // Classifier to determine where the information belongs to
+    private void charClassifier (String line, Map fileMap, Player player) {
+        char firstChar = line.charAt(0);
+        switch (firstChar) {
+            case 'p':
+                fileMap.gatherPlayerLoc(line, player);
+                break;
+            case 'm':
+                fileMap.makeNewMonster(line);
+                break;
+            case 'i':
+                fileMap.makeNewItem(line);
+                break;
+            case '.':
+                fileMap.setRows(line);
+                break;
+            case '~':
+                fileMap.setRows(line);
+                break;
+            case '#':
+                fileMap.setRows(line);
+                break;
+        }
+    }
 
+    // Extracting map information from file input
+    private String[] mapInfo (String line) {
+        try {
+            String[] lineArgs = line.split(" ");
+            return lineArgs;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // PrintWriter for saving function
+    private PrintWriter newFileOrOverwrite (String filename) {
+
+        PrintWriter outStream = null;
+
+        try {
+            outStream = new PrintWriter(new FileOutputStream(filename));
+        } catch (Exception e) {
+            System.out.println("Error opening " + filename + "for writing.");
+        }
+
+        return outStream;
+    }
 }

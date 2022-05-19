@@ -1,11 +1,18 @@
 
 /**
- * This program print out the map like Rover.java, with more functionalities.
+ * The overall class for each  Holds map data and entities of the  
+ * It would make sense for this class to manages interactions between entities (such as triggering battles, 
+ * or detecting the pickup of items by the player). 
+ * Manages the overall rendering of the world, perhaps delegating to some rendering to other classes.
+
+
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296
  *
  */
 import java.util.Set;
 import java.util.Scanner;
+import java.util.ArrayList;
+//This class should control movement, battlecheck, and item interactions.
  public class World {
     
     public static final int MAP_WIDTH = 6; // Final static since the size of map and location of monster won't change
@@ -13,98 +20,154 @@ import java.util.Scanner;
 	public static final int MONSTER_X = 4;
 	public static final int MONSTER_Y = 2;
     public static final Set<String> ALLOWED_MOVEMENT = Set.of ("w", "a", "s", "d", "home");
-    private int playerX; // Initial location of player is (1, 1), change by user I/O
-	private int playerY;
+    private Player player;
+	private Monster monster;
 
-    // Constructor
-    public World () {
-        this.playerX = 1; // Initialise player location (1, 1)
-        this.playerY = 1;
+    private ArrayList<Player> playerList;
+    private ArrayList<Monster> monsterList;
+    private ArrayList<Item> itemList;
+    private ArrayList<Entity> toRemove = new ArrayList<Entity>();
+    private Map map;
+
+    // Default constructor
+    public World (Player player, Monster monster, Map map) {
+        this.map = map;
+        this.player = player;
+        this.monster = monster;
     }
 
-    public void gameWorld (
-        World world, Player player, Monster monster, 
-        Scanner movement, Battle battle, Commands commands
-        ) {
+    // Fileinput constructor
+    public World (Map map) {
+        this.map = map;
+        this.playerList = map.getPlayerList();
+        this.monsterList = map.getMonsterList();
+        this.itemList = map.getItemList();
+    }
+
+    // Dummy constructor
+    public World () {}
+
+    public void gameWorld (Scanner movement, Commands commands, String fileOrDefault) {
         
-        // Reset player location
-        this.setPlayer (1, 1);
         // Start the advanture
-        boolean isReachMonster = false;
+        boolean isEnd = false;
+        if (fileOrDefault.equals("default")) {
+        // Start the game world loop
+            while (!isEnd) {
 
-        while (!isReachMonster) {
-            world.printMap (
-                MAP_WIDTH, MAP_HEIGHT, 
-                world.playerX, world.playerY,
-                MONSTER_X, MONSTER_Y,
-                nameOnMap (player.getName ().toUpperCase ()),
-                nameOnMap (monster.getName ().toLowerCase ())
-            );
-            world.prompt();
-			
-            // Validating input directions and player won't be out of boundary after moving
-            String direction = world.inputForMap (movement);
-            if (world.validateDirection (direction)) {continue;}
-            if (world.validateMove (direction)) {continue;}
+                // Print out default map
+                map.defaultMapping(player, monster);
+                prompt();
 
-            // Update location information
-            switch (direction) {
-                case "w":
-                    world.setPlayer (world.playerX, world.playerY - 1);
+                // Monster move
+                monster.movement(map, player);
+                
+                
+                // Validating input directions and player won't be out of boundary after moving
+                String direction = inputForMap (movement);
+
+                if (validateDirection (direction)) {
+                    player.movement("stay", map);
+                    isEnd = battle(commands, isEnd, fileOrDefault);
+                    continue;
+                }
+                if (validateMove (direction)) {
+                    player.movement("stay", map);
+                    isEnd = battle(commands, isEnd, fileOrDefault);
+                    continue;
+                }
+
+                // If home is typed, return to menu
+                if (direction.equals("home")) {
+                    isEnd = home();
                     break;
-                case "a":
-                    world.setPlayer (world.playerX - 1, world.playerY);
-                    break;
-                case "s":
-                    world.setPlayer (world.playerX, world.playerY + 1);
-                    break;
-                case "d":
-                    world.setPlayer (world.playerX + 1, world.playerY);
-                    break;            
-                case "home":
-                    isReachMonster = home (isReachMonster);
-                    break;
+                }
+                
+                // Player move
+                player.movement(direction);
+
+                // Check if player meets monster
+                if (battle(commands, isEnd, fileOrDefault)){
+                    isEnd = end();
+                    continue;
+                };
+            }
             
-            } 
-            // Check if the program needs to stop
-            if(isReachMonster) {break;}
-            else {isReachMonster = encounterCheck (world.playerX, world.playerY);}
+        } else if (fileOrDefault.equals("file")) {
+
+            while (!isEnd) {
+
+                // Removed lost monster or picked items
+                map.removeEntity(this.toRemove);
+                // Clear temporate list
+                toRemove.clear();
+                // Update monster and item lists
+                this.monsterList = map.getMonsterList();
+                this.itemList = map.getItemList();
+                
+
+                // Print out file input map
+                map.fileMapping();
+                prompt();
+
+                // Monster move
+                for (Monster monster : monsterList) {
+                    monster.movement(map, playerList.get(0));
+                    
+                }
+
+                // Validating input directions and player won't be out of boundary after moving
+                String direction = inputForMap (movement);
+                if (validateDirection (direction)) {
+                    playerList.get(0).movement("stay", map);
+                    isEnd = battle(commands, isEnd, fileOrDefault);
+                    continue;
+                }
+                // Even the move is invalid, monster move
+                if (filevalidateMove (direction)) {
+                    playerList.get(0).movement("stay", map);
+                    isEnd = battle(commands, isEnd, fileOrDefault);
+                    continue;
+                }
+
+                // If home is typed, return to menu
+                if (direction.equals("home")) {
+                    isEnd = home();
+                    playerList.get(0).resetPerk();
+                    break;
+                }
+
+                // Player move
+                for (Player player : playerList) {
+                    player.movement(direction, map);
+                }
+
+                // Battle check
+                if (battle(commands, isEnd, fileOrDefault)){
+                    isEnd = end();
+                    continue;
+                };
+                
+                // Check if items need to be picked
+                for (Item ite :itemList) {
+                    if(itemPickCheck(playerList.get(0), ite)) {
+                        String afterEffect = ite.effect(playerList.get(0));
+                        this.toRemove(ite);
+                        if (afterEffect.equals("warp")) {
+                            isEnd = end();
+                            playerList.get(0).resetPerk();
+                            break;
+                        }
+
+                    }
+                }
+
+
+                
+                
+            }
         }
-        // Battle starts
-        if (encounterCheck (world.playerX, world.playerY)) {
-            battle.battleLoop (player, monster, commands);
-        }
-        
     }
-    
-    // Set player location after user's input
-    private void setPlayer (int x, int y) {
-        this.playerX = x;
-        this.playerY = y;
-    }
-    
-    // Print map function
-    private void printMap (
-        int mapWidth, int mapHeight, 
-        int playerX, int playerY, 
-        int monsterX, int monsterY,
-        char pFirstChar, char mFirstChar
-    ) {
-		for (int i = 0; i < mapHeight; i++) {
-			for (int j = 0; j < mapWidth; j++) {
-				if (playerX == j && playerY == i) { 		  
-					System.out.printf ("%c", pFirstChar);	  
-				} else if (monsterX == j && monsterY == i) {
-					System.out.printf ("%c", mFirstChar);
-				} else {
-					System.out.print (".");
-				}
-			}
-			System.out.println ();
-		}
-		System.out.println ();
-		
-	}
 
     // Reminder for user to type
     private void prompt () {
@@ -113,7 +176,6 @@ import java.util.Scanner;
     // Check if the direction is allowed
     private boolean validateDirection (String input) {
         if (!ALLOWED_MOVEMENT.contains (input)) {
-            System.out.println ("You type something wrong, please try again!!");
             return true;
         }
         return false;
@@ -122,18 +184,36 @@ import java.util.Scanner;
     private boolean validateMove (String input) {
         switch (input) {
             case "w":
-                if (this.playerY - 1 < 0) {return true;}
+                if (this.player.getPlayerPosY() - 1 < 0) {return true;}
                 break;
             case "a":
-                if (this.playerX - 1 < 0) {return true;}
+                if (this.player.getPlayerPosX() - 1 < 0) {return true;}
                 break;
             case "s":
-                if (this.playerY + 1 > MAP_HEIGHT - 1) {return true;}
+                if (this.player.getPlayerPosY() + 1 > map.getHeight() - 1) {return true;}
                 break;
             case "d":
-                if (this.playerX + 1 > MAP_WIDTH - 1) {return true;}
+                if (this.player.getPlayerPosX() + 1 > map.getWidth() - 1) {return true;}
                 break;
-            case "home": break;
+        }
+        return false;
+    }
+
+    // Check if player is still inside the custimized map after moving
+    private boolean filevalidateMove (String input) {
+        switch (input) {
+            case "w":
+                if (playerList.get(0).getPlayerPosY() - 1 < 0) {return true;}
+                break;
+            case "a":
+                if (playerList.get(0).getPlayerPosX() - 1 < 0) {return true;}
+                break;
+            case "s":
+                if (playerList.get(0).getPlayerPosY() + 1 > map.getHeight() - 1) {return true;}
+                break;
+            case "d":
+                if (playerList.get(0).getPlayerPosX() + 1 > map.getWidth() - 1) {return true;}
+                break;
         }
         return false;
     }
@@ -146,20 +226,63 @@ import java.util.Scanner;
 	}
 
     // Battle encounter check
-    private boolean encounterCheck (int playerX, int playerY) {
-        if (playerX == MONSTER_X && playerY == MONSTER_Y) {return true;}
+    private boolean encounterCheck (Player player, Monster monster) {
+        if (player.getPlayerPosX() == monster.getMonsterPosX() && player.getPlayerPosY() == monster.getMonsterPosY()) {return true;}
         return false;
+    }
+
+    // Battle check, if player lose, return to menu
+    private boolean battle (Commands commands, boolean isEnd, String control) {
+
+        if (control.equals("file")) {
+            for (Monster mon : this.monsterList) {
+                if (encounterCheck(playerList.get(0), mon)) {
+                    Battle battle = new Battle(playerList.get(0), mon);
+                    // if player wins, continue. Lost monster removed
+                    // if player lose, return to menu
+                    String result = battle.battleLoop(commands);
+                    if (result.equals("monster")) {
+                        playerList.get(0).resetPerk();
+                        isEnd = end();
+                        break;
+                    } else {
+                        this.toRemove(mon);
+                    }
+                    
+                }
+            }
+
+        } else {
+
+            if (encounterCheck(player, monster)) {
+                Battle battle = new Battle(player, monster);
+                // return to menu after the battle
+                battle.battleLoop(commands);
+                isEnd = end();
+            }
+            
+        }
+        return isEnd;
+
     }
     
     // Method for users to break loop
-    private boolean home (boolean isReachMonster) {
+    private boolean home () {
         System.out.println ("Returning home...\n");
         return true;
     }
 
-    // Decide names on the map
-    private char nameOnMap (String name) {
-        char firstChar = name.charAt(0);
-        return firstChar;
+    private boolean end () {return true;}
+
+    // Item location check
+    private boolean itemPickCheck (Player player, Item item) {
+        if (player.getPlayerPosX() == item.getItemPosX() && player.getPlayerPosY() == item.getItemPosY()) {return true;}
+        return false;
+    }
+
+    // Temporate list for removal
+    private void toRemove (Entity e) {
+
+        this.toRemove.add(e);
     }
 }
