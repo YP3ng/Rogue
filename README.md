@@ -1,6 +1,5 @@
-Ready version for A2
 
-Requirements
+Requirements for version 1
 Features we will add include:
 1. An inheritance structure for managing entities in the World (Player, Monster, Item classes)
 
