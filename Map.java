@@ -34,12 +34,17 @@ public class Map implements Traversable {
         this.itemList = new ArrayList<Item>(3);
     }
 
-    // for default map 
+    // Default constructor 
     public Map(Player player, Monster monster) {
         this.mapWidth = DEFAULT_MAP_WIDTH;
         this.mapHeight = DEFAULT_MAP_HEIGHT;
+        this.mapRows = new ArrayList<StringBuilder>(mapHeight);
         player.setPlayerLocation(DEFAULT_PLAYER_X, DEFAULT_PLAYER_Y);
         monster.setMonsterLocation(DEFAULT_MONSTER_X, DEFAULT_MONSTER_Y);
+        StringBuilder line = new StringBuilder("......");
+        for (int i = 0; i < DEFAULT_MAP_HEIGHT; i++) {
+            this.mapRows.add(line);
+        }
     }
 
     @Override
