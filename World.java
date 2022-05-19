@@ -131,7 +131,10 @@ import java.util.ArrayList;
                 }
 
                 // Battle check
-                battle(commands, isEnd);
+                if (battle(commands, isEnd)){
+                    isEnd = end();
+                    continue;
+                };
                 
                 // Check if items need to be picked
                 for (Item ite :itemList) {
@@ -139,7 +142,7 @@ import java.util.ArrayList;
                         String afterEffect = ite.effect(playerList.get(0));
                         this.toRemove(ite);
                         if (afterEffect == "warp") {
-                            isEnd = home();
+                            isEnd = end();
                             playerList.get(0).resetPerk();
                             break;
                         }
@@ -230,10 +233,10 @@ import java.util.ArrayList;
                 String result = battle.battleLoop(commands, "file");
                 if (result == "monster") {
                     playerList.get(0).resetPerk();
-                    isEnd = home();
+                    isEnd = end();
                     break;
                 } else {
-                    this.toRemove(monster);
+                    this.toRemove(mon);
                 }
                 
             }
@@ -247,6 +250,8 @@ import java.util.ArrayList;
         System.out.println ("Returning home...\n");
         return true;
     }
+
+    private boolean end () {return true;}
 
     // Item location check
     private boolean itemPickCheck (Player player, Item item) {
