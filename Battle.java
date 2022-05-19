@@ -29,7 +29,7 @@ public class Battle {
         boolean isEnd = false;
         while(!isEnd) {
             // Display the player and monster's health
-            commands.displayPlayerMonster(commands.returnP(player), commands.returnM(monster));
+            commands.battlePlayerMonster(commands.returnP(player), commands.returnM(monster));
 
             // Player starts the attack
             this.attack(player.getName(), player.getCurDamage(), monster.getName());
@@ -52,6 +52,7 @@ public class Battle {
                 System.out.printf("%s wins!\n\n", monster.getName());
                 return "monster";
             }
+            System.out.println();
         }
         return null;
     }

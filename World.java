@@ -176,7 +176,6 @@ import java.util.ArrayList;
     // Check if the direction is allowed
     private boolean validateDirection (String input) {
         if (!ALLOWED_MOVEMENT.contains (input)) {
-            //System.out.println ("You type something wrong, please try again!!");
             return true;
         }
         return false;

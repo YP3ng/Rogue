@@ -252,6 +252,13 @@ public class Commands {
 		System.out.printf ("Monster: %s\n", mInfo);
 	}
 
+    // Concat infomation from both player and monster
+	public void battlePlayerMonster (String pInfo, String mInfo) {
+		System.out.printf ("%s", pInfo);
+		System.out.print (" | ");
+		System.out.printf ("%s\n", mInfo);
+	}
+
     /**
      * The following methods are helpers for commands
      * 
