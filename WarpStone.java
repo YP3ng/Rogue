@@ -22,6 +22,7 @@ public class WarpStone extends Item {
     public String effect(Player player) {
         
         System.out.println("World complete! (You leveled up!)");
+        System.out.println();
         player.setLevel(player.getLevel() + 1);
        
         //return to main menu

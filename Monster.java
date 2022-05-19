@@ -18,7 +18,7 @@ public class Monster extends Unit {
 
     // File constructor
     public Monster (String[] infoSet) {
-        super(infoSet[3]);
+        this.name = infoSet[3];
         this.setMaxHealth(Integer.parseInt(infoSet[4]));
         this.setCurHealth(getMaxHealth());
         this.setDamage(Integer.parseInt(infoSet[5]));

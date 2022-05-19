@@ -10,8 +10,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileInputStream;
-
+import java.io.PrintWriter;
 
 public class Commands {
     
@@ -163,7 +164,30 @@ public class Commands {
         
     }
 
-    public void save () {};
+    public void save (Player player) {
+
+        String filename = "player.dat";
+
+        // Create printWriter
+        PrintWriter outStream = newFileOrOverwrite(filename);
+
+        // Check if player exist
+        if (player.getName() == null) {
+            
+            System.out.println("No player data to save.");
+        } else {
+            // Player information
+            String name = player.getName();
+            int level = player.getLevel();
+
+            outStream.println(name + " " + level);
+            outStream.close();
+
+            System.out.println("Player data saved.");
+        }
+        System.out.println();
+
+    };
 
     public void load () {};
 
@@ -302,5 +326,17 @@ public class Commands {
         }
     }
 
-    
+    // PrintWriter for saving function
+    private PrintWriter newFileOrOverwrite (String filename) {
+
+        PrintWriter outStream = null;
+
+        try {
+            outStream = new PrintWriter(new FileOutputStream(filename));
+        } catch (Exception e) {
+            System.out.println("Error opening " + filename + "for writing.");
+        }
+
+        return outStream;
+    }
 }

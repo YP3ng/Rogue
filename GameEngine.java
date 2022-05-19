@@ -90,8 +90,12 @@ public class GameEngine {
 					commands.exitProgram ();
 					break;
 				case "save":
+					commands.save(player);
+					prompt();
 					break;
 				case "load":
+					commands.load();
+					prompt();
 					break;
             }
 		}
