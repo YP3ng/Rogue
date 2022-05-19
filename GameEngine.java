@@ -111,7 +111,6 @@ public class GameEngine {
 	// Validates users' inputs
 	private boolean validateInputText (String input) {
 		if (!Commands.ALLOWED_COMMANDS.contains (inputForCommand(input))) {
-			prompt ();
 			return true;
 		}
 		return false;
@@ -129,7 +128,7 @@ public class GameEngine {
 	private String inputFileName (String input) {
 		String [] commandArgs = input.split (" ");
 		String fileName = commandArgs[1];
-		return fileName;
+		return fileName + ".dat";
 	}
 
 	// Checking input length
