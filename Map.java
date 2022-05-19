@@ -63,19 +63,19 @@ public class Map implements Traversable {
         StringBuilder row;
         char type;
 
-        if (direction == "left") {
+        if (direction.equals("left")) {
             // left
             row = mapRows.get(y);
             type = row.charAt(x - 1);
             return type;
 
-        } else if (direction == "right") {
+        } else if (direction.equals("right")) {
             // right
             row = mapRows.get(y);
             type = row.charAt(x + 1);
             return type;
 
-        } else if (direction == "up") {
+        } else if (direction.equals("up")) {
             // up
             row = mapRows.get(y - 1);
             type = row.charAt(x);

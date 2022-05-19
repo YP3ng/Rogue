@@ -51,7 +51,7 @@ import java.util.ArrayList;
         
         // Start the advanture
         boolean isEnd = false;
-        if (fileOrDefault == "default") {
+        if (fileOrDefault.equals("default")) {
         // Start the game world loop
             while (!isEnd) {
 
@@ -78,7 +78,7 @@ import java.util.ArrayList;
                 }
 
                 // If home is typed, return to menu
-                if (direction == "home") {
+                if (direction.equals("home")) {
                     isEnd = home();
                     break;
                 }
@@ -93,7 +93,7 @@ import java.util.ArrayList;
                 };
             }
             
-        } else if (fileOrDefault == "file") {
+        } else if (fileOrDefault.equals("file")) {
 
             while (!isEnd) {
 
@@ -131,7 +131,7 @@ import java.util.ArrayList;
                 }
 
                 // If home is typed, return to menu
-                if (direction == "home") {
+                if (direction.equals("home")) {
                     isEnd = home();
                     playerList.get(0).resetPerk();
                     break;
@@ -153,7 +153,7 @@ import java.util.ArrayList;
                     if(itemPickCheck(playerList.get(0), ite)) {
                         String afterEffect = ite.effect(playerList.get(0));
                         this.toRemove(ite);
-                        if (afterEffect == "warp") {
+                        if (afterEffect.equals("warp")) {
                             isEnd = end();
                             playerList.get(0).resetPerk();
                             break;
@@ -176,7 +176,7 @@ import java.util.ArrayList;
     // Check if the direction is allowed
     private boolean validateDirection (String input) {
         if (!ALLOWED_MOVEMENT.contains (input)) {
-            System.out.println ("You type something wrong, please try again!!");
+            //System.out.println ("You type something wrong, please try again!!");
             return true;
         }
         return false;
@@ -196,7 +196,6 @@ import java.util.ArrayList;
             case "d":
                 if (this.player.getPlayerPosX() + 1 > map.getWidth() - 1) {return true;}
                 break;
-            case "home": break;
         }
         return false;
     }
@@ -216,7 +215,6 @@ import java.util.ArrayList;
             case "d":
                 if (playerList.get(0).getPlayerPosX() + 1 > map.getWidth() - 1) {return true;}
                 break;
-            case "home": break;
         }
         return false;
     }
@@ -237,14 +235,14 @@ import java.util.ArrayList;
     // Battle check, if player lose, return to menu
     private boolean battle (Commands commands, boolean isEnd, String control) {
 
-        if (control == "file") {
+        if (control.equals("file")) {
             for (Monster mon : this.monsterList) {
                 if (encounterCheck(playerList.get(0), mon)) {
                     Battle battle = new Battle(playerList.get(0), mon);
                     // if player wins, continue. Lost monster removed
                     // if player lose, return to menu
                     String result = battle.battleLoop(commands);
-                    if (result == "monster") {
+                    if (result.equals("monster")) {
                         playerList.get(0).resetPerk();
                         isEnd = end();
                         break;
