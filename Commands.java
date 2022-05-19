@@ -310,7 +310,7 @@ public class Commands {
             gameFileRead = new Scanner (new FileInputStream(fileName));
             return gameFileRead;
         } catch (FileNotFoundException e) {
-            throw new GameLevelNotFoundException ("Map not found");
+            throw new GameLevelNotFoundException ("Map not found.");
         }
     }
 

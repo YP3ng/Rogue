@@ -111,7 +111,6 @@ public class GameEngine {
 	// Validates users' inputs
 	private boolean validateInputText (String input) {
 		if (!Commands.ALLOWED_COMMANDS.contains (inputForCommand(input))) {
-			System.out.println ("Invalid commands name");
 			prompt ();
 			return true;
 		}
