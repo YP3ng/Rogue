@@ -28,6 +28,16 @@ public class Player extends Unit {
         this.curHealth = this.maxHealth (level);
         this.setPlayerLocation(1, 1);
         this.perkCount = 0;
+        this.curDamage = this.getCurDamage();
+    }
+
+    // Read player constructor
+    public Player (String name, int level) {
+        this.name = name;
+        this.level = level;
+        this.curHealth = this.maxHealth (level);
+        this.perkCount = 0;
+        this.curDamage = this.getCurDamage();
     }
 
     // Display player's information

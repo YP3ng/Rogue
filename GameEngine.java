@@ -26,7 +26,6 @@ public class GameEngine {
 		
 		// User I/O
 		Scanner scan = new Scanner (System.in);
-		//TODO: Might not need to initialise instance here.
 		Player player = new Player ();
 		Monster monster = new Monster ();
 		Commands commands = new Commands ();
@@ -94,7 +93,7 @@ public class GameEngine {
 					prompt();
 					break;
 				case "load":
-					commands.load();
+					player = commands.load();
 					prompt();
 					break;
             }

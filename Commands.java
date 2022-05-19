@@ -124,7 +124,8 @@ public class Commands {
                 gameFileRead =gameFileRead(fileName);
             } catch (GameLevelNotFoundException e) {
                 System.out.println(e.getMessage());
-                System.exit(1); // Should return to menu, not exit the program
+                System.out.println();
+                return; // TODO:Should return to menu, not exit the program
             }
 
             // Extracting the information of the map
@@ -188,8 +189,28 @@ public class Commands {
         System.out.println();
 
     };
+    // Loading player name and level
+    public Player load () {
 
-    public void load () {};
+        String fileName = "player.dat";
+        String[] sepLine = new String[2];
+        // Open reader
+        Scanner inStream = playerFileRead(fileName);
+        if (inStream != null) {
+            while (inStream.hasNextLine()) {
+                sepLine = inStream.nextLine().split(" ");
+            }
+        } else {
+            return null;
+        }
+        // Initialise new player
+        Player loadPlayer = new Player(sepLine[0], Integer.parseInt(sepLine[1]));
+
+        System.out.println("Player data loaded.");
+        System.out.println();
+
+        return loadPlayer;
+    };
 
     // Close the program
     public void exitProgram () {
@@ -283,12 +304,28 @@ public class Commands {
 
     // Read game file
     private Scanner gameFileRead (String fileName) throws GameLevelNotFoundException {
+
+        Scanner gameFileRead = null;
         try {
-            Scanner gameFileRead = new Scanner (new FileInputStream(fileName));
+            gameFileRead = new Scanner (new FileInputStream(fileName));
             return gameFileRead;
         } catch (FileNotFoundException e) {
             throw new GameLevelNotFoundException ("Map not found");
         }
+    }
+
+    // Read player file
+    private Scanner playerFileRead (String fileName) {
+
+        Scanner playerFileRead = null;
+        try {
+            playerFileRead = new Scanner (new FileInputStream(fileName));
+            return playerFileRead;
+        } catch (FileNotFoundException e) {
+            System.out.println("No player data found.");
+            System.out.println();
+        }
+        return playerFileRead;
     }
     
     // Classifier to determine where the information belongs to
