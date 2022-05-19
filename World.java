@@ -98,25 +98,41 @@ import java.util.ArrayList;
                 map.fileMapping();
                 prompt();
 
-                // Monster move, even player's input is invalid
+                // Monster move
                 for (Monster monster : monsterList) {
                     monster.movement(map, playerList.get(0));
-                    if (encounterCheck(playerList.get(0), monster)) {
-                        Battle battle = new Battle(playerList.get(0), monster);
-                        // if player wins, continue. Lost monster removed
-                        // if player lose, return to menu
-                        String result = battle.battleLoop(commands, "file");
-                        if (result == "monster") {
-                            playerList.get(0).resetPerk();
-                            isEnd = home();
-                            break;
-                        } else {
-                            this.toRemove(monster);
-                        }
-                        
-                    };
+                    
                 }
 
+                // Validating input directions and player won't be out of boundary after moving
+                String direction = inputForMap (movement);
+                if (validateDirection (direction)) {
+                    playerList.get(0).movement("stay", map);
+                    isEnd = battle(commands, isEnd);
+                    continue;
+                }
+                // Even the move is invalid, monster move
+                if (filevalidateMove (direction)) {
+                    playerList.get(0).movement("stay", map);
+                    isEnd = battle(commands, isEnd);
+                    continue;
+                }
+
+                // If home is typed, return to menu
+                if (direction == "home") {
+                    isEnd = home();
+                    playerList.get(0).resetPerk();
+                    break;
+                }
+
+                // Player move
+                for (Player player : playerList) {
+                    player.movement(direction, map);
+                }
+
+                // Battle check
+                battle(commands, isEnd);
+                
                 // Check if items need to be picked
                 for (Item ite :itemList) {
                     if(itemPickCheck(playerList.get(0), ite)) {
@@ -132,22 +148,7 @@ import java.util.ArrayList;
                 }
 
 
-                // Validating input directions and player won't be out of boundary after moving
-                String direction = inputForMap (movement);
-                if (validateDirection (direction)) {continue;}
-                if (filevalidateMove (direction)) {continue;}
-
-                // If home is typed, return to menu
-                if (direction == "home") {
-                    isEnd = home();
-                    playerList.get(0).resetPerk();
-                    break;
-                }
-
-                // Player move
-                for (Player player : playerList) {
-                    player.movement(direction, map);
-                }
+                
                 
             }
         }
@@ -216,6 +217,29 @@ import java.util.ArrayList;
     private boolean encounterCheck (Player player, Monster monster) {
         if (player.getPlayerPosX() == monster.getMonsterPosX() && player.getPlayerPosY() == monster.getMonsterPosY()) {return true;}
         return false;
+    }
+
+    // Battle check
+    private boolean battle (Commands commands, boolean isEnd) {
+
+        for (Monster mon : this.monsterList) {
+            if (encounterCheck(playerList.get(0), mon)) {
+                Battle battle = new Battle(playerList.get(0), mon);
+                // if player wins, continue. Lost monster removed
+                // if player lose, return to menu
+                String result = battle.battleLoop(commands, "file");
+                if (result == "monster") {
+                    playerList.get(0).resetPerk();
+                    isEnd = home();
+                    break;
+                } else {
+                    this.toRemove(monster);
+                }
+                
+            }
+        }
+        return isEnd;
+
     }
     
     // Method for users to break loop

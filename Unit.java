@@ -5,10 +5,6 @@
  */
 public abstract class Unit extends Entity {
     
-    // Might not need this position infomation
-    protected int playerPosX;
-    protected int playerPosY;
-
     public Unit(String name) {
         super(name);
     }

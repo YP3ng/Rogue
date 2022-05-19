@@ -74,7 +74,7 @@ public class Monster extends Unit {
 
     // If the monster starts to move or not
     private boolean distCheck (Player player) {
-        if (distWithPlayer(this.monsterPosX, this.monsterPosY, player.getPlayerPosX(), player.getPlayerPosY()) <= 4) {
+        if (distWithPlayer(monsterPosX, monsterPosY, player) <= 4) {
             return true;
         }
         
@@ -82,8 +82,8 @@ public class Monster extends Unit {
     }
 
     // Distance function with the player
-    private double distWithPlayer (int monsterPosX, int monsterPosY, int playerPosX, int playerPosY) {
-        double dist = Math.abs(monsterPosX - playerPosX) + Math.abs(monsterPosY - playerPosY);
+    private double distWithPlayer (int monsterPosX, int monsterPosY, Player player) {
+        double dist = Math.abs(monsterPosX - player.getPlayerPosX()) + Math.abs(monsterPosY - player.getPlayerPosY());
         return dist;
     }
 

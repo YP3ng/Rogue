@@ -9,8 +9,8 @@ public class Player extends Unit {
     private int curHealth;
     private int curDamage;
     private int perkCount;
-    // protected int playerPosX;
-    // protected int playerPosY;
+    private int playerPosX;
+    private int playerPosY;
 
     //constructor
     public Player (String name) {
@@ -84,6 +84,9 @@ public class Player extends Unit {
                     map.resetRow(playerPosX, playerPosY);
                     setPlayerLocation (playerPosX + 1, playerPosY);
                 }
+                break;
+            case "stay":
+                setPlayerLocation(playerPosX, playerPosY);
                 break;
         }
     }
