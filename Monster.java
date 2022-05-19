@@ -4,18 +4,19 @@
  *
  */
 public class Monster extends Unit {
-    // All of the variables are from user inputs
+    private String name;
     private int maxHealth;
     private int damage;
     private int curHealth;
     private int monsterPosX;
     private int monsterPosY;
 
-    // Constructor
+    // Inheritance constructor
     public Monster (String name) {
         super(name);
     }
 
+    // File constructor
     public Monster (String[] infoSet) {
         super(infoSet[3]);
         this.setMaxHealth(Integer.parseInt(infoSet[4]));
@@ -24,8 +25,10 @@ public class Monster extends Unit {
         this.setMonsterLocation(Integer.parseInt(infoSet[1]), Integer.parseInt(infoSet[2]));
     }
 
-    // Default
-    public Monster () {}
+    // Default constructor
+    public Monster () {
+        this.name = null;
+    }
 
     // Print monster info
     @Override

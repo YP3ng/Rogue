@@ -58,11 +58,24 @@ import java.util.ArrayList;
                 // Print out default map
                 map.defaultMapping(player, monster);
                 prompt();
+
+                // Monster move
+                monster.movement(map, player);
+                
                 
                 // Validating input directions and player won't be out of boundary after moving
                 String direction = inputForMap (movement);
-                if (validateDirection (direction)) {continue;}
-                if (validateMove (direction)) {continue;}
+
+                if (validateDirection (direction)) {
+                    player.movement("stay", map);
+                    isEnd = battle(commands, isEnd, fileOrDefault);
+                    continue;
+                }
+                if (validateMove (direction)) {
+                    player.movement("stay", map);
+                    isEnd = battle(commands, isEnd, fileOrDefault);
+                    continue;
+                }
 
                 // If home is typed, return to menu
                 if (direction == "home") {
@@ -74,11 +87,10 @@ import java.util.ArrayList;
                 player.movement(direction);
 
                 // Check if player meets monster
-                if (encounterCheck (player, monster)) {
-                    Battle defaultBattle = new Battle(player, monster);
-                    defaultBattle.battleLoop(commands, "default");
-
-                }
+                if (battle(commands, isEnd, fileOrDefault)){
+                    isEnd = end();
+                    continue;
+                };
             }
             
         } else if (fileOrDefault == "file") {
@@ -108,13 +120,13 @@ import java.util.ArrayList;
                 String direction = inputForMap (movement);
                 if (validateDirection (direction)) {
                     playerList.get(0).movement("stay", map);
-                    isEnd = battle(commands, isEnd);
+                    isEnd = battle(commands, isEnd, fileOrDefault);
                     continue;
                 }
                 // Even the move is invalid, monster move
                 if (filevalidateMove (direction)) {
                     playerList.get(0).movement("stay", map);
-                    isEnd = battle(commands, isEnd);
+                    isEnd = battle(commands, isEnd, fileOrDefault);
                     continue;
                 }
 
@@ -131,7 +143,7 @@ import java.util.ArrayList;
                 }
 
                 // Battle check
-                if (battle(commands, isEnd)){
+                if (battle(commands, isEnd, fileOrDefault)){
                     isEnd = end();
                     continue;
                 };
@@ -222,24 +234,36 @@ import java.util.ArrayList;
         return false;
     }
 
-    // Battle check
-    private boolean battle (Commands commands, boolean isEnd) {
+    // Battle check, if player lose, return to menu
+    private boolean battle (Commands commands, boolean isEnd, String control) {
 
-        for (Monster mon : this.monsterList) {
-            if (encounterCheck(playerList.get(0), mon)) {
-                Battle battle = new Battle(playerList.get(0), mon);
-                // if player wins, continue. Lost monster removed
-                // if player lose, return to menu
-                String result = battle.battleLoop(commands, "file");
-                if (result == "monster") {
-                    playerList.get(0).resetPerk();
-                    isEnd = end();
-                    break;
-                } else {
-                    this.toRemove(mon);
+        if (control == "file") {
+            for (Monster mon : this.monsterList) {
+                if (encounterCheck(playerList.get(0), mon)) {
+                    Battle battle = new Battle(playerList.get(0), mon);
+                    // if player wins, continue. Lost monster removed
+                    // if player lose, return to menu
+                    String result = battle.battleLoop(commands);
+                    if (result == "monster") {
+                        playerList.get(0).resetPerk();
+                        isEnd = end();
+                        break;
+                    } else {
+                        this.toRemove(mon);
+                    }
+                    
                 }
-                
             }
+
+        } else {
+
+            if (encounterCheck(player, monster)) {
+                Battle battle = new Battle(player, monster);
+                // return to menu after the battle
+                battle.battleLoop(commands);
+                isEnd = end();
+            }
+            
         }
         return isEnd;
 

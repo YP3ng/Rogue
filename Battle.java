@@ -20,7 +20,7 @@ public class Battle {
     // Dummy constructor
     public Battle () {}
     
-    public String battleLoop(Commands commands, String control) {
+    public String battleLoop(Commands commands) {
 
         // Battle starts
         System.out.printf("%s encountered a %s!\n\n", player.getName(), monster.getName());

@@ -148,6 +148,12 @@ public class Commands {
             }
             
         } else {
+
+            // Check if monster is created
+            if (monster.getName() == null) {
+                System.out.println("No monster found, please create a monster with 'monster' first.\n");
+                return;
+            }
             // No file input, set a default map
             Map defaultMap = new Map(player, monster);
             World world = new World(player, monster, defaultMap);

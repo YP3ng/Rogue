@@ -12,7 +12,7 @@ public class Player extends Unit {
     private int playerPosX;
     private int playerPosY;
 
-    //constructor
+    // File constructor
     public Player (String name) {
         super(name);
         this.level = 1;
@@ -21,7 +21,9 @@ public class Player extends Unit {
         this.curDamage = this.getCurDamage();
     }
 
+    // Default constructor
     public Player () {
+        this.name = null;
         this.level = 1;
         this.curHealth = this.maxHealth (level);
         this.setPlayerLocation(1, 1);
