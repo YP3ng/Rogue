@@ -1,2 +1,4 @@
 # java classes won't be pushed 
-.class
+*.class
+.vscode
+player.dat
