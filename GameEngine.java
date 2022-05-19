@@ -55,20 +55,23 @@ public class GameEngine {
 					prompt ();
 					break;
                 case "player":
-					if (player.getName () != null) {
-						player.displayInfo (
-							player.getName ()
-						);
+
+					if (player.getName() == null) {
+						// Player creation
+						commands.player(player, scan);
 						if (commands.returnToMenu (scan)) {
 							menu (player, monster, commands);
 							continue;
 						}
 					}
-					commands.player (player, scan);
+
+					// Player created
+					player.displayInfo(player.getName());
 					if (commands.returnToMenu (scan)) {
 						menu (player, monster, commands);
 						continue;
 					}
+
                     break;
                 case "monster":
 					commands.monster (monster, scan);
@@ -93,7 +96,7 @@ public class GameEngine {
 					prompt();
 					break;
 				case "load":
-					player = commands.load();
+					player = commands.load(player);					
 					prompt();
 					break;
             }

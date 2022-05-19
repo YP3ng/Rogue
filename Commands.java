@@ -190,7 +190,7 @@ public class Commands {
 
     };
     // Loading player name and level
-    public Player load () {
+    public Player load (Player player) {
 
         String fileName = "player.dat";
         String[] sepLine = new String[2];
@@ -201,15 +201,15 @@ public class Commands {
                 sepLine = inStream.nextLine().split(" ");
             }
         } else {
-            return null;
+            return player;
         }
         // Initialise new player
-        Player loadPlayer = new Player(sepLine[0], Integer.parseInt(sepLine[1]));
+        player = new Player(sepLine[0], Integer.parseInt(sepLine[1]));
 
         System.out.println("Player data loaded.");
         System.out.println();
 
-        return loadPlayer;
+        return player;
     };
 
     // Close the program
