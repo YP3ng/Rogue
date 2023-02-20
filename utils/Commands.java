@@ -11,11 +11,11 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 
-import Entity.Entity.Monster;
+import Entity.Unit.Monster;
 import Entity.Unit.Player;
 import Exception.GameLevelNotFoundException;
-import Map.World;
-import Map.Map.Map;
+import Terrain.World;
+import Terrain.Map;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

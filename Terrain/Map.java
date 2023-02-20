@@ -1,4 +1,4 @@
-package Map;
+package Terrain;
 /**
  * There is a lot of functionality related with managing the "map" for the world (the look of the terrain, and whether or not it is traversable). 
  * It would make sense to group this functionality out into a separate class. 

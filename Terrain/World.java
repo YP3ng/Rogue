@@ -1,4 +1,4 @@
-package Map;
+package Terrain;
 
 /**
  * The overall class for each  Holds map data and entities of the  
@@ -12,12 +12,12 @@ package Map;
  */
 import java.util.Set;
 
-import Entity.Entity.Entity;
-import Entity.Entity.Item;
-import Entity.Entity.Monster;
+import Entity.Entity;
+import Entity.Item.Item;
+import Entity.Unit.Monster;
 import Entity.Unit.Player;
 import Interaction.Battle;
-import Map.Map.Map;
+import Terrain.Map;
 import utils.Commands;
 
 import java.util.Scanner;

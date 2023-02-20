@@ -1,5 +1,5 @@
 package Interaction;
-import Entity.Entity.Monster;
+import Entity.Unit.Monster;
 import Entity.Unit.Player;
 import utils.Commands;
 

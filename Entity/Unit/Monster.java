@@ -1,5 +1,5 @@
 package Entity.Unit;
-import Map.Map;
+import Terrain.Map;
 
 /**
  * This class is for setting and getting monster infomation

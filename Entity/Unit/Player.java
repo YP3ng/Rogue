@@ -1,5 +1,5 @@
 package Entity.Unit;
-import Map.Map;
+import Terrain.Map;
 
 /**
  * Player's functionalities are all stored here. Included name, level, maxHealth, attackDamage, summary
