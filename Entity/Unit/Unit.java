@@ -1,3 +1,6 @@
+package Entity.Unit;
+import Entity.Entity;
+
 /**
  * 
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296

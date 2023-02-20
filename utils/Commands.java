@@ -1,3 +1,4 @@
+package utils;
 
 
 /**
@@ -9,6 +10,13 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
+
+import Entity.Unit.Monster;
+import Entity.Unit.Player;
+import Exception.GameLevelNotFoundException;
+import Terrain.World;
+import Terrain.Map;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
@@ -125,7 +133,7 @@ public class Commands {
             } catch (GameLevelNotFoundException e) {
                 System.out.println(e.getMessage());
                 System.out.println();
-                return; // TODO:Should return to menu, not exit the program
+                return;
             }
 
             // Extracting the information of the map

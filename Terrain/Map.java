@@ -1,3 +1,4 @@
+package Terrain;
 /**
  * There is a lot of functionality related with managing the "map" for the world (the look of the terrain, and whether or not it is traversable). 
  * It would make sense to group this functionality out into a separate class. 
@@ -8,6 +9,15 @@
  */
 
 import java.util.ArrayList;
+
+import Entity.Entity;
+import Entity.Item.DamagePerk;
+import Entity.Item.HealingItem;
+import Entity.Item.Item;
+import Entity.Item.WarpStone;
+import Entity.Unit.Monster;
+import Entity.Unit.Player;
+
 public class Map implements Traversable {
 
     // Map size in assignment one, set as default map size if no file input exist

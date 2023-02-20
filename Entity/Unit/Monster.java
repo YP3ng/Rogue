@@ -1,3 +1,6 @@
+package Entity.Unit;
+import Terrain.Map;
+
 /**
  * This class is for setting and getting monster infomation
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296

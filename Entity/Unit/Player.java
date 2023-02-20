@@ -1,3 +1,6 @@
+package Entity.Unit;
+import Terrain.Map;
+
 /**
  * Player's functionalities are all stored here. Included name, level, maxHealth, attackDamage, summary
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296
@@ -7,10 +10,10 @@ public class Player extends Unit {
     private String name;
     private int level;
     private int curHealth;
-    private int curDamage;
     private int perkCount;
     private int playerPosX;
     private int playerPosY;
+    private int curDamage;
 
     // File constructor
     public Player (String name) {
