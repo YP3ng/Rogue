@@ -17,7 +17,6 @@ import Entity.Item.Item;
 import Entity.Unit.Monster;
 import Entity.Unit.Player;
 import Interaction.Battle;
-import Terrain.Map;
 import utils.Commands;
 
 import java.util.Scanner;

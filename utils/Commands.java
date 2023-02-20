@@ -133,7 +133,7 @@ public class Commands {
             } catch (GameLevelNotFoundException e) {
                 System.out.println(e.getMessage());
                 System.out.println();
-                return; // TODO:Should return to menu, not exit the program
+                return;
             }
 
             // Extracting the information of the map

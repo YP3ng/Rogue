@@ -10,10 +10,10 @@ public class Player extends Unit {
     private String name;
     private int level;
     private int curHealth;
-    private int curDamage;
     private int perkCount;
     private int playerPosX;
     private int playerPosY;
+    private int curDamage;
 
     // File constructor
     public Player (String name) {
