@@ -1,3 +1,6 @@
+package Entity.Item;
+import Entity.Entity;
+import Entity.Unit.Player;
 
 /**
  * Three items

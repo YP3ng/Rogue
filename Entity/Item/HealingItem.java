@@ -1,3 +1,6 @@
+package Entity.Item;
+import Entity.Unit.Player;
+
 /**
  * "+" instantly heals the player to full health
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296

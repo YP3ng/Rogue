@@ -1,3 +1,4 @@
+package Entity;
 /**
  * The world manages a lot entities within it. 
  * It would make sense for entities to know how to render themselves, 

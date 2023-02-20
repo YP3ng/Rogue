@@ -1,3 +1,6 @@
+package Entity.Unit;
+import Map.Map;
+
 /**
  * Player's functionalities are all stored here. Included name, level, maxHealth, attackDamage, summary
  * @author Yi-Cheng Peng, yicpeng@student.unimelb.edu.au, 1319296

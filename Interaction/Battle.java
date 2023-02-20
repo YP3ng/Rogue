@@ -1,3 +1,7 @@
+package Interaction;
+import Entity.Entity.Monster;
+import Entity.Unit.Player;
+import utils.Commands;
 
 /**
  * This class is for battle loop, return the result of battle.

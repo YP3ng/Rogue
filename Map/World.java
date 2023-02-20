@@ -1,3 +1,4 @@
+package Map;
 
 /**
  * The overall class for each  Holds map data and entities of the  
@@ -10,6 +11,15 @@
  *
  */
 import java.util.Set;
+
+import Entity.Entity.Entity;
+import Entity.Entity.Item;
+import Entity.Entity.Monster;
+import Entity.Unit.Player;
+import Interaction.Battle;
+import Map.Map.Map;
+import utils.Commands;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 //This class should control movement, battlecheck, and item interactions.
